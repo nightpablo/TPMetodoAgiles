@@ -2,6 +2,9 @@ package Interfaz;
 
 
 import javax.swing.JFrame;
+
+import Utils.GestionCampos;
+
 import java.awt.GridBagLayout;
 import javax.swing.JButton;
 import java.awt.GridBagConstraints;
@@ -39,6 +42,26 @@ public class VentanaPrincipal extends JFrame {
 		gbc_btnNewButton.gridy = 0;
 		getContentPane().add(btnNewButton, gbc_btnNewButton);
 		
+		pack();
+		
+		
+		// Pruebas Ctrl + Shift + C para descomentar/comentar
+		
+//		System.out.println("Email: pablo_barragan@hotmail.com existe? "+(new GestionCampos()).evaluarEmail("pablo_barragan@hotmail.com"));
+//		System.out.println("Email: pbarragan@frsf.utn.edu.com existe? "+(new GestionCampos()).evaluarEmail("pbarragan@frsf.utn.edu.ar"));
+//		System.out.println("Email: pablo_barragan@asd@hotmail.com existe? "+(new GestionCampos()).evaluarEmail("pablo_barragan@asd@hotmail.com"));
+		
+//		System.out.println("Numérico: holiscomováñ es sólo numero? "+(new GestionCampos()).evaluarNumérico("holiscomováñ"));
+//		System.out.println("Numérico: holiscomováñ es sólo letras? "+(new GestionCampos()).evaluarLetras("holiscomováñ"));
+//		System.out.println("Numérico: holiscomováñ contiene numeros y letras? "+(new GestionCampos()).evaluarAlfanumérico("holiscomováñ")+"\n");
+//		
+//		System.out.println("Numérico: 123131 es sólo numero? "+(new GestionCampos()).evaluarNumérico("123131"));
+//		System.out.println("Numérico: 123131 es sólo letras? "+(new GestionCampos()).evaluarLetras("123131"));
+//		System.out.println("Numérico: 123131 contiene numeros y letras? "+(new GestionCampos()).evaluarAlfanumérico("123131")+"\n");
+//		
+//		System.out.println("Numérico: holis123aka es sólo numero? "+(new GestionCampos()).evaluarNumérico("holis123aka"));
+//		System.out.println("Numérico: holis123aka es sólo letras? "+(new GestionCampos()).evaluarLetras("holis123aka"));
+//		System.out.println("Numérico: holis123aka contiene numeros y letras? "+(new GestionCampos()).evaluarAlfanumérico("holis123aka"));
 	}
 
 }

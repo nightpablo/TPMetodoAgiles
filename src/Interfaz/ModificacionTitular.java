@@ -19,10 +19,8 @@ import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.border.EmptyBorder;
 import javax.swing.border.MatteBorder;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
 
-public class AltaTitular extends JDialog {
+public class ModificacionTitular extends JDialog {
 	private JTextField textField;
 	private JTextField textField_1;
 	private JTextField textField_3;
@@ -31,10 +29,12 @@ public class AltaTitular extends JDialog {
 	private JTextField textField_6;
 	private JTextField textField_7;
 	private JTextField textField_2;
+	private JTextField textField_8;
 	private JTextField textField_9;
+	private JTextField textField_10;
 	
 	
-	public AltaTitular(JFrame principal) {
+	public ModificacionTitular(JFrame principal, Integer id) {
 		super(principal);
 		GridBagLayout gridBagLayout = new GridBagLayout();
 		gridBagLayout.columnWidths = new int[]{0, 0};
@@ -51,10 +51,10 @@ public class AltaTitular extends JDialog {
 		gbc_panel.gridy = 0;
 		getContentPane().add(panel, gbc_panel);
 		GridBagLayout gbl_panel = new GridBagLayout();
-		gbl_panel.columnWidths = new int[]{0, 0, 45, -3, 0, 0, 0, 0, 87, 0, 0};
-		gbl_panel.rowHeights = new int[]{0, 0, 0, 0, 0, 0, 10, 0, 0, 21, 0, 0, 0, 0};
+		gbl_panel.columnWidths = new int[]{0, 0, 0, 0, 0, 0, 0, 0, 87, 0, 0};
+		gbl_panel.rowHeights = new int[]{0, 0, 0, 0, 0, 0, 10, 0, 0, 21, 0, 0, 0, 0, 0};
 		gbl_panel.columnWeights = new double[]{0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 1.0, Double.MIN_VALUE};
-		gbl_panel.rowWeights = new double[]{0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, Double.MIN_VALUE};
+		gbl_panel.rowWeights = new double[]{0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, Double.MIN_VALUE};
 		panel.setLayout(gbl_panel);
 		
 		JLabel lblAltaTitular = new JLabel("Nuevo Titular");
@@ -303,40 +303,61 @@ public class AltaTitular extends JDialog {
 		panel.add(textField_6, gbc_textField_6);
 		textField_6.setColumns(10);
 		
+		JLabel lblObservaciones = new JLabel("Observaciones:");
+		GridBagConstraints gbc_lblObservaciones = new GridBagConstraints();
+		gbc_lblObservaciones.anchor = GridBagConstraints.EAST;
+		gbc_lblObservaciones.insets = new Insets(0, 0, 5, 5);
+		gbc_lblObservaciones.gridx = 1;
+		gbc_lblObservaciones.gridy = 10;
+		panel.add(lblObservaciones, gbc_lblObservaciones);
+		
+		textField_8 = new JTextField();
+		textField_8.setToolTipText("Ingrese las observaciones");
+		GridBagConstraints gbc_textField_8 = new GridBagConstraints();
+		gbc_textField_8.gridwidth = 5;
+		gbc_textField_8.insets = new Insets(0, 0, 5, 5);
+		gbc_textField_8.fill = GridBagConstraints.HORIZONTAL;
+		gbc_textField_8.gridx = 2;
+		gbc_textField_8.gridy = 10;
+		panel.add(textField_8, gbc_textField_8);
+		textField_8.setColumns(10);
+		
 		JLabel lblGrupo = new JLabel("Grupo:");
 		GridBagConstraints gbc_lblGrupo = new GridBagConstraints();
 		gbc_lblGrupo.anchor = GridBagConstraints.EAST;
 		gbc_lblGrupo.insets = new Insets(0, 0, 5, 5);
 		gbc_lblGrupo.gridx = 1;
-		gbc_lblGrupo.gridy = 10;
+		gbc_lblGrupo.gridy = 11;
 		panel.add(lblGrupo, gbc_lblGrupo);
 		
-		JComboBox comboBox_2 = new JComboBox();
-		comboBox_2.setModel(new DefaultComboBoxModel(new String[] {"A", "AB", "B", "O"}));
-		GridBagConstraints gbc_comboBox_2 = new GridBagConstraints();
-		gbc_comboBox_2.anchor = GridBagConstraints.WEST;
-		gbc_comboBox_2.insets = new Insets(0, 0, 5, 5);
-		gbc_comboBox_2.gridx = 2;
-		gbc_comboBox_2.gridy = 10;
-		panel.add(comboBox_2, gbc_comboBox_2);
+		textField_10 = new JTextField();
+		textField_10.setToolTipText("Ingrese el grupo de sangre");
+		GridBagConstraints gbc_textField_10 = new GridBagConstraints();
+		gbc_textField_10.gridwidth = 2;
+		gbc_textField_10.insets = new Insets(0, 0, 5, 5);
+		gbc_textField_10.fill = GridBagConstraints.HORIZONTAL;
+		gbc_textField_10.gridx = 2;
+		gbc_textField_10.gridy = 11;
+		panel.add(textField_10, gbc_textField_10);
+		textField_10.setColumns(10);
 		
 		JLabel lblFactor = new JLabel("Factor:");
 		GridBagConstraints gbc_lblFactor = new GridBagConstraints();
 		gbc_lblFactor.anchor = GridBagConstraints.EAST;
 		gbc_lblFactor.insets = new Insets(0, 0, 5, 5);
 		gbc_lblFactor.gridx = 4;
-		gbc_lblFactor.gridy = 10;
+		gbc_lblFactor.gridy = 11;
 		panel.add(lblFactor, gbc_lblFactor);
 		
 		JComboBox comboBox_1 = new JComboBox();
 		comboBox_1.setToolTipText("\u00BFPositivo o Negativo?");
 		comboBox_1.setModel(new DefaultComboBoxModel(new String[] {"+", "-"}));
 		GridBagConstraints gbc_comboBox_1 = new GridBagConstraints();
-		gbc_comboBox_1.gridwidth = 3;
+		gbc_comboBox_1.gridwidth = 2;
 		gbc_comboBox_1.anchor = GridBagConstraints.WEST;
 		gbc_comboBox_1.insets = new Insets(0, 0, 5, 5);
 		gbc_comboBox_1.gridx = 5;
-		gbc_comboBox_1.gridy = 10;
+		gbc_comboBox_1.gridy = 11;
 		panel.add(comboBox_1, gbc_comboBox_1);
 		
 		JLabel lblDonanteDerganos = new JLabel("Donante de \u00F3rganos:");
@@ -344,7 +365,7 @@ public class AltaTitular extends JDialog {
 		gbc_lblDonanteDerganos.anchor = GridBagConstraints.EAST;
 		gbc_lblDonanteDerganos.insets = new Insets(0, 0, 5, 5);
 		gbc_lblDonanteDerganos.gridx = 1;
-		gbc_lblDonanteDerganos.gridy = 11;
+		gbc_lblDonanteDerganos.gridy = 12;
 		panel.add(lblDonanteDerganos, gbc_lblDonanteDerganos);
 		
 		JCheckBox chckbxNewCheckBox = new JCheckBox("No");
@@ -360,34 +381,21 @@ public class AltaTitular extends JDialog {
 		gbc_chckbxNewCheckBox.anchor = GridBagConstraints.WEST;
 		gbc_chckbxNewCheckBox.insets = new Insets(0, 0, 5, 5);
 		gbc_chckbxNewCheckBox.gridx = 2;
-		gbc_chckbxNewCheckBox.gridy = 11;
+		gbc_chckbxNewCheckBox.gridy = 12;
 		panel.add(chckbxNewCheckBox, gbc_chckbxNewCheckBox);
 		
 		JButton btnNewButton = new JButton("Crear");
-		btnNewButton.addMouseListener(new MouseAdapter() {
-			@Override
-			public void mouseClicked(MouseEvent e) {
-				
-			}
-		});
 		GridBagConstraints gbc_btnNewButton = new GridBagConstraints();
 		gbc_btnNewButton.insets = new Insets(0, 0, 0, 5);
 		gbc_btnNewButton.gridx = 7;
-		gbc_btnNewButton.gridy = 12;
+		gbc_btnNewButton.gridy = 13;
 		panel.add(btnNewButton, gbc_btnNewButton);
 		
 		JButton btnCancelar = new JButton("Cancelar");
-		btnCancelar.addMouseListener(new MouseAdapter() {
-			@Override
-			public void mouseClicked(MouseEvent arg0) {
-				AltaTitular.this.dispose();
-			}
-		});
-		
 		GridBagConstraints gbc_btnCancelar = new GridBagConstraints();
 		gbc_btnCancelar.insets = new Insets(0, 0, 0, 5);
 		gbc_btnCancelar.gridx = 8;
-		gbc_btnCancelar.gridy = 12;
+		gbc_btnCancelar.gridy = 13;
 		panel.add(btnCancelar, gbc_btnCancelar);
 		
 		
