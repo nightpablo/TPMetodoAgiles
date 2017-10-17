@@ -9,18 +9,21 @@ public class Titular implements EntityImplementation {
 
 	public static final Object NOMBRE_TABLA = "titulares";
 	private Integer id_titular;
-	private String tipo_doc;
-	private Integer doc;
+	private String tipo_dni;
+	private Integer dni;
 	private String apellidos;
 	private String nombres;
 	private String fecha_nac;
 	private String direccion;
+	private String localidad;
 	private String clases; // "A,B" o "A,F" o "A"
-	private String grupo_sanguineo; // "AB+" "AB-"
+	private String grupo; // "AB" "A" "B" "O"
+	private String factor;
 	private boolean donante; // "true" "false"
-	
+	private String fecha_alta_titular;
+
 	public Titular() {
-		
+
 	}
 
 	public Titular(JSONObject jsonObject) {
@@ -35,20 +38,20 @@ public class Titular implements EntityImplementation {
 		this.id_titular = id_titular;
 	}
 
-	public String getTipo_doc() {
-		return tipo_doc;
+	public String getTipo_DNI() {
+		return tipo_dni;
 	}
 
-	public void setTipo_doc(String tipo_doc) {
-		this.tipo_doc = tipo_doc;
+	public void setTipo_DNI(String tipo_dni) {
+		this.tipo_dni = tipo_dni;
 	}
 
-	public Integer getDoc() {
-		return doc;
+	public Integer getDNI() {
+		return dni;
 	}
 
-	public void setDoc(Integer doc) {
-		this.doc = doc;
+	public void setDNI(Integer dni) {
+		this.dni = dni;
 	}
 
 	public String getApellidos() {
@@ -83,6 +86,14 @@ public class Titular implements EntityImplementation {
 		this.direccion = direccion;
 	}
 
+	public String getLocalidad() {
+		return localidad;
+	}
+
+	public void setLocalidad(String localidad) {
+		this.localidad = localidad;
+	}
+
 	public String getClases() {
 		return clases;
 	}
@@ -91,12 +102,20 @@ public class Titular implements EntityImplementation {
 		this.clases = clases;
 	}
 
-	public String getGrupoSanguineo() {
-		return grupo_sanguineo;
+	public String getGrupo() {
+		return grupo;
 	}
 
-	public void setGrupoSanguineo(String grupo_sanguineo) {
-		this.grupo_sanguineo = grupo_sanguineo;
+	public void setGrupo(String grupo) {
+		this.grupo = grupo;
+	}
+
+	public String getFactor() {
+		return factor;
+	}
+
+	public void setFactor(String factor) {
+		this.factor = factor;
 	}
 
 	public boolean isDonante() {
@@ -107,19 +126,30 @@ public class Titular implements EntityImplementation {
 		this.donante = donante;
 	}
 
+	public String getFecha_alta_titular() {
+		return fecha_alta_titular;
+	}
+
+	public void setFecha_alta_titular(String fecha_alta_titular) {
+		this.fecha_alta_titular = fecha_alta_titular;
+	}
+
 	@Override
 	public void toEntity(JSONObject object) {
 		try {
 			id_titular = object.getInt(TableDatabase.TITULAR.ID_TITULAR);
-			tipo_doc = object.getString(TableDatabase.TITULAR.TIPO_DOC);
-			doc = object.getInt(TableDatabase.TITULAR.DOCUMENTO);
+			tipo_dni = object.getString(TableDatabase.TITULAR.TIPO_DNI);
+			dni = object.getInt(TableDatabase.TITULAR.DNI);
 			apellidos = object.getString(TableDatabase.TITULAR.APELLIDOS);
 			nombres = object.getString(TableDatabase.TITULAR.NOMBRES);
 			fecha_nac = object.getString(TableDatabase.TITULAR.FECHA_NAC);
 			direccion = object.getString(TableDatabase.TITULAR.DIRECCION);
+			direccion = object.getString(TableDatabase.TITULAR.LOCALIDAD);
 			clases = object.getString(TableDatabase.TITULAR.CLASES);
-			grupo_sanguineo = object.getString(TableDatabase.TITULAR.GRUPO_SANGUINEO); // "AB+" "AB-"
-			donante = object.getString(TableDatabase.TITULAR.DONANTE).equals("Si")? true:false; // "true" "false"
+			grupo = object.getString(TableDatabase.TITULAR.GRUPO); // "AB+" "A" "B" "O"
+			factor = object.getString(TableDatabase.TITULAR.FACTOR);
+			donante = object.getString(TableDatabase.TITULAR.DONANTE).equals("Si") ? true : false; // "true" "false"
+			fecha_alta_titular = object.getString(TableDatabase.TITULAR.FECHA_ALTA_TITULAR);
 		} catch (JSONException e) {
 			e.printStackTrace();
 		}
@@ -128,21 +158,28 @@ public class Titular implements EntityImplementation {
 	@Override
 	public JSONObject toJSON() {
 		JSONObject jsonObject = new JSONObject();
-		
+
 		try {
-			jsonObject.put(TableDatabase.TITULAR.ID_TITULAR,id_titular);
-			jsonObject.put(TableDatabase.TITULAR.TIPO_DOC,tipo_doc);
-			jsonObject.put(TableDatabase.TITULAR.DOCUMENTO,doc);
-//			jsonObject.put(TableDatabase.TITULAR, );
-			
-			
-//			jsonObject.put("nombre",nombre);
+			jsonObject.put(TableDatabase.TITULAR.ID_TITULAR, id_titular);
+			jsonObject.put(TableDatabase.TITULAR.TIPO_DNI, tipo_dni);
+			jsonObject.put(TableDatabase.TITULAR.DNI, dni);
+			jsonObject.put(TableDatabase.TITULAR.APELLIDOS, apellidos);
+			jsonObject.put(TableDatabase.TITULAR.NOMBRES, nombres);
+			jsonObject.put(TableDatabase.TITULAR.FECHA_NAC, fecha_nac);
+			jsonObject.put(TableDatabase.TITULAR.DIRECCION, direccion);
+			jsonObject.put(TableDatabase.TITULAR.LOCALIDAD, localidad);
+			jsonObject.put(TableDatabase.TITULAR.CLASES, clases);
+			jsonObject.put(TableDatabase.TITULAR.GRUPO, grupo);
+			jsonObject.put(TableDatabase.TITULAR.FACTOR, factor);
+			jsonObject.put(TableDatabase.TITULAR.DONANTE, donante ? "Si" : "No");
+			jsonObject.put(TableDatabase.TITULAR.FECHA_ALTA_TITULAR, fecha_alta_titular);
+
 		} catch (JSONException e) {
 			e.printStackTrace();
 		}
-		
-		System.out.println("JSON: "+jsonObject.toString());
-		
+
+		System.out.println("JSON: " + jsonObject.toString());
+
 		return jsonObject;
 	}
 

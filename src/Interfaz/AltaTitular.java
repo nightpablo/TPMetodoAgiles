@@ -19,8 +19,14 @@ import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.border.EmptyBorder;
 import javax.swing.border.MatteBorder;
+
+import Control.TitularJSON;
+import Utils.HTTPConection;
+
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
 
 public class AltaTitular extends JDialog {
 	private JTextField textField;
@@ -31,7 +37,6 @@ public class AltaTitular extends JDialog {
 	private JTextField textField_6;
 	private JTextField textField_7;
 	private JTextField textField_2;
-	private JTextField textField_9;
 	
 	
 	public AltaTitular(JFrame principal) {
@@ -52,9 +57,9 @@ public class AltaTitular extends JDialog {
 		getContentPane().add(panel, gbc_panel);
 		GridBagLayout gbl_panel = new GridBagLayout();
 		gbl_panel.columnWidths = new int[]{0, 0, 45, -3, 0, 0, 0, 0, 87, 0, 0};
-		gbl_panel.rowHeights = new int[]{0, 0, 0, 0, 0, 0, 10, 0, 0, 21, 0, 0, 0, 0};
+		gbl_panel.rowHeights = new int[]{0, 0, 0, 35, 0, 0, 10, 0, 21, 0, 31, 0, 0, 0};
 		gbl_panel.columnWeights = new double[]{0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 1.0, Double.MIN_VALUE};
-		gbl_panel.rowWeights = new double[]{0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, Double.MIN_VALUE};
+		gbl_panel.rowWeights = new double[]{0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, Double.MIN_VALUE};
 		panel.setLayout(gbl_panel);
 		
 		JLabel lblAltaTitular = new JLabel("Nuevo Titular");
@@ -196,7 +201,7 @@ public class AltaTitular extends JDialog {
 		panel.add(textField_1, gbc_textField_1);
 		textField_1.setColumns(10);
 		
-		JLabel lblNewLabel_3 = new JLabel("Domicilio:");
+		JLabel lblNewLabel_3 = new JLabel("Direccion:");
 		GridBagConstraints gbc_lblNewLabel_3 = new GridBagConstraints();
 		gbc_lblNewLabel_3.anchor = GridBagConstraints.EAST;
 		gbc_lblNewLabel_3.insets = new Insets(0, 0, 5, 5);
@@ -215,30 +220,12 @@ public class AltaTitular extends JDialog {
 		panel.add(textField_7, gbc_textField_7);
 		textField_7.setColumns(10);
 		
-		JLabel lblLugarDeNacimiento = new JLabel("Lugar de emisi\u00F3n:");
-		GridBagConstraints gbc_lblLugarDeNacimiento = new GridBagConstraints();
-		gbc_lblLugarDeNacimiento.anchor = GridBagConstraints.EAST;
-		gbc_lblLugarDeNacimiento.insets = new Insets(0, 0, 5, 5);
-		gbc_lblLugarDeNacimiento.gridx = 1;
-		gbc_lblLugarDeNacimiento.gridy = 7;
-		panel.add(lblLugarDeNacimiento, gbc_lblLugarDeNacimiento);
-		
-		textField_9 = new JTextField();
-		GridBagConstraints gbc_textField_9 = new GridBagConstraints();
-		gbc_textField_9.gridwidth = 5;
-		gbc_textField_9.insets = new Insets(0, 0, 5, 5);
-		gbc_textField_9.fill = GridBagConstraints.HORIZONTAL;
-		gbc_textField_9.gridx = 2;
-		gbc_textField_9.gridy = 7;
-		panel.add(textField_9, gbc_textField_9);
-		textField_9.setColumns(10);
-		
 		JLabel lblLocalidad = new JLabel("Localidad:");
 		GridBagConstraints gbc_lblLocalidad = new GridBagConstraints();
 		gbc_lblLocalidad.anchor = GridBagConstraints.EAST;
 		gbc_lblLocalidad.insets = new Insets(0, 0, 5, 5);
 		gbc_lblLocalidad.gridx = 1;
-		gbc_lblLocalidad.gridy = 8;
+		gbc_lblLocalidad.gridy = 7;
 		panel.add(lblLocalidad, gbc_lblLocalidad);
 		
 		textField_2 = new JTextField();
@@ -248,7 +235,7 @@ public class AltaTitular extends JDialog {
 		gbc_textField_2.insets = new Insets(0, 0, 5, 5);
 		gbc_textField_2.fill = GridBagConstraints.HORIZONTAL;
 		gbc_textField_2.gridx = 2;
-		gbc_textField_2.gridy = 8;
+		gbc_textField_2.gridy = 7;
 		panel.add(textField_2, gbc_textField_2);
 		textField_2.setColumns(10);
 		
@@ -257,7 +244,7 @@ public class AltaTitular extends JDialog {
 		gbc_lblNewLabel.anchor = GridBagConstraints.EAST;
 		gbc_lblNewLabel.insets = new Insets(0, 0, 5, 5);
 		gbc_lblNewLabel.gridx = 1;
-		gbc_lblNewLabel.gridy = 9;
+		gbc_lblNewLabel.gridy = 8;
 		panel.add(lblNewLabel, gbc_lblNewLabel);
 		
 		textField_4 = new JTextField();
@@ -265,7 +252,7 @@ public class AltaTitular extends JDialog {
 		GridBagConstraints gbc_textField_4 = new GridBagConstraints();
 		gbc_textField_4.insets = new Insets(0, 0, 5, 5);
 		gbc_textField_4.gridx = 2;
-		gbc_textField_4.gridy = 9;
+		gbc_textField_4.gridy = 8;
 		panel.add(textField_4, gbc_textField_4);
 		textField_4.setColumns(10);
 		
@@ -274,7 +261,7 @@ public class AltaTitular extends JDialog {
 		gbc_lblNewLabel_1.anchor = GridBagConstraints.EAST;
 		gbc_lblNewLabel_1.insets = new Insets(0, 0, 5, 5);
 		gbc_lblNewLabel_1.gridx = 3;
-		gbc_lblNewLabel_1.gridy = 9;
+		gbc_lblNewLabel_1.gridy = 8;
 		panel.add(lblNewLabel_1, gbc_lblNewLabel_1);
 		
 		textField_5 = new JTextField();
@@ -282,7 +269,7 @@ public class AltaTitular extends JDialog {
 		GridBagConstraints gbc_textField_5 = new GridBagConstraints();
 		gbc_textField_5.insets = new Insets(0, 0, 5, 5);
 		gbc_textField_5.gridx = 4;
-		gbc_textField_5.gridy = 9;
+		gbc_textField_5.gridy = 8;
 		panel.add(textField_5, gbc_textField_5);
 		textField_5.setColumns(10);
 		
@@ -291,7 +278,7 @@ public class AltaTitular extends JDialog {
 		gbc_lblNewLabel_2.anchor = GridBagConstraints.EAST;
 		gbc_lblNewLabel_2.insets = new Insets(0, 0, 5, 5);
 		gbc_lblNewLabel_2.gridx = 5;
-		gbc_lblNewLabel_2.gridy = 9;
+		gbc_lblNewLabel_2.gridy = 8;
 		panel.add(lblNewLabel_2, gbc_lblNewLabel_2);
 		
 		textField_6 = new JTextField();
@@ -299,9 +286,16 @@ public class AltaTitular extends JDialog {
 		GridBagConstraints gbc_textField_6 = new GridBagConstraints();
 		gbc_textField_6.insets = new Insets(0, 0, 5, 5);
 		gbc_textField_6.gridx = 6;
-		gbc_textField_6.gridy = 9;
+		gbc_textField_6.gridy = 8;
 		panel.add(textField_6, gbc_textField_6);
 		textField_6.setColumns(10);
+		
+		JLabel lblddmmaaaa = new JLabel("(dd/mm/aaaa)");
+		GridBagConstraints gbc_lblddmmaaaa = new GridBagConstraints();
+		gbc_lblddmmaaaa.insets = new Insets(0, 0, 5, 5);
+		gbc_lblddmmaaaa.gridx = 1;
+		gbc_lblddmmaaaa.gridy = 9;
+		panel.add(lblddmmaaaa, gbc_lblddmmaaaa);
 		
 		JLabel lblGrupo = new JLabel("Grupo:");
 		GridBagConstraints gbc_lblGrupo = new GridBagConstraints();
@@ -312,7 +306,7 @@ public class AltaTitular extends JDialog {
 		panel.add(lblGrupo, gbc_lblGrupo);
 		
 		JComboBox comboBox_2 = new JComboBox();
-		comboBox_2.setModel(new DefaultComboBoxModel(new String[] {"A", "AB", "B", "O"}));
+		comboBox_2.setModel(new DefaultComboBoxModel(new String[] {"A", "AB", "B", "0"}));
 		GridBagConstraints gbc_comboBox_2 = new GridBagConstraints();
 		gbc_comboBox_2.anchor = GridBagConstraints.WEST;
 		gbc_comboBox_2.insets = new Insets(0, 0, 5, 5);
@@ -364,6 +358,20 @@ public class AltaTitular extends JDialog {
 		panel.add(chckbxNewCheckBox, gbc_chckbxNewCheckBox);
 		
 		JButton btnNewButton = new JButton("Crear");
+		btnNewButton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				new TitularJSON().crear(
+						(String)comboBox.getSelectedItem(),
+						textField.getText(),
+						textField_3.getText(),
+						textField_1.getText(),
+						textField_7.getText(),
+						textField_2.getText(),
+						textField_4.getText(), textField_5.getText(), textField_6.getText(),
+						(String)comboBox_2.getSelectedItem(), (String)comboBox_1.getSelectedItem(),
+						chckbxNewCheckBox.getText());
+			}
+		});
 		btnNewButton.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {

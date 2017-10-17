@@ -1,11 +1,13 @@
 package Control;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import Entidad.TableDatabase;
 import Entidad.Titular;
 import Utils.HTTPConection;
 import Utils.Implements.ControlImplementation;
@@ -15,6 +17,32 @@ public class TitularJSON implements ControlImplementation<Titular>{
 	@Override
 	public void crear(Titular entrada) {
 		new HTTPConection().gestion(new Object[] {Titular.NOMBRE_TABLA,"POST",entrada.toJSON()});
+	}
+	
+	public void crear(String tipo_dni, String dni, String nombres, String apellidos, 
+			String direccion, String localidad, String dia, String mes, String año, 
+			String grupo, String factor, String donante) {
+		Titular nuevo = new Titular();
+		nuevo.setTipo_DNI(tipo_dni);
+		nuevo.setDNI(Integer.parseInt(dni));
+		nuevo.setNombres(nombres);
+		nuevo.setApellidos(apellidos);
+		nuevo.setDireccion(direccion);
+		nuevo.setLocalidad(localidad);
+		nuevo.setFecha_nac(dia+"/"+mes+"/"+año);
+		nuevo.setGrupo(grupo);
+		nuevo.setFactor(factor);
+		nuevo.setDonante(donante.equals("Si")?true:false);
+		
+		Calendar c = Calendar.getInstance();
+	    String dd = Integer.toString(c.get(Calendar.DATE));
+	    String mm = Integer.toString(c.get(Calendar.MONTH));
+	    String aaaa = Integer.toString(c.get(Calendar.YEAR));
+	    
+	    nuevo.setFecha_alta_titular(dd+"/"+mm+"/"+aaaa);
+	    
+	    this.crear(nuevo);
+		
 	}
 
 	@Override

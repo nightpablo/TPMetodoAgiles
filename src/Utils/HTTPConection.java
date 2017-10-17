@@ -16,7 +16,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 public class HTTPConection {
-	private final String IP_SERVER = "10.15.154.133";
+	private final String IP_SERVER = "localhost";
     private final String PORT_SERVER = "4000";
     private final String TAG_LOG = "Municipalidad";
     private HttpURLConnection urlConnection;
