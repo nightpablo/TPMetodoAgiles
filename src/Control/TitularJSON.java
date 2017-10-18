@@ -2,6 +2,7 @@ package Control;
 
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Date;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -34,13 +35,15 @@ public class TitularJSON implements ControlImplementation<Titular>{
 		nuevo.setFactor(factor);
 		nuevo.setDonante(donante.equals("Si")?true:false);
 		
+		Date d = new Date();
 		Calendar c = Calendar.getInstance();
+		c.setTime(d);
 	    String dd = Integer.toString(c.get(Calendar.DATE));
 	    String mm = Integer.toString(c.get(Calendar.MONTH));
 	    String aaaa = Integer.toString(c.get(Calendar.YEAR));
 	    
-	    nuevo.setFecha_alta_titular(dd+"/"+mm+"/"+aaaa);
-	    
+	    nuevo.setFecha_alta_titular(dd+"/"+(mm+1)+"/"+aaaa);
+
 	    this.crear(nuevo);
 		
 	}
