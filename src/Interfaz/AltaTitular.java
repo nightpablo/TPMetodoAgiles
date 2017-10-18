@@ -357,6 +357,7 @@ public class AltaTitular extends JDialog {
 		gbc_chckbxNewCheckBox.gridy = 11;
 		panel.add(chckbxNewCheckBox, gbc_chckbxNewCheckBox);
 		
+		
 		JButton btnNewButton = new JButton("Crear");
 		btnNewButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
