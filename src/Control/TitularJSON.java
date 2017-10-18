@@ -39,10 +39,10 @@ public class TitularJSON implements ControlImplementation<Titular>{
 		Calendar c = Calendar.getInstance();
 		c.setTime(d);
 	    String dd = Integer.toString(c.get(Calendar.DATE));
-	    String mm = Integer.toString(c.get(Calendar.MONTH));
+	    String mm = Integer.toString(c.get(Calendar.MONTH)+1);
 	    String aaaa = Integer.toString(c.get(Calendar.YEAR));
 	    
-	    nuevo.setFecha_alta_titular(dd+"/"+(mm+1)+"/"+aaaa);
+	    nuevo.setFecha_alta_titular(dd+"/"+mm+"/"+aaaa);
 
 	    this.crear(nuevo);
 		
