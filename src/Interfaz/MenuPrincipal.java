@@ -72,6 +72,9 @@ public class MenuPrincipal extends JFrame {
 			}
 		});
 		
+	
+		
+		
 		JButton btnImg = new JButton("");
 		btnImg.setIcon(new ImageIcon(MenuPrincipal.class.getResource("/Imagenes/licConducir.png")));
 		btnImg.setSelectedIcon(new ImageIcon(MenuPrincipal.class.getResource("/Imagenes/licConducir.png")));
