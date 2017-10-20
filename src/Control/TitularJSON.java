@@ -20,7 +20,7 @@ public class TitularJSON implements ControlImplementation<Titular>{
 		new HTTPConection().gestion(new Object[] {Titular.NOMBRE_TABLA,"POST",entrada.toJSON()});
 	}
 	
-	public void crear(String tipo_dni, String dni, String nombres, String apellidos, 
+	public Titular crear(String tipo_dni, String dni, String nombres, String apellidos, 
 			String direccion, String localidad, String dia, String mes, String año, 
 			String grupo, String factor, String donante) {
 		Titular nuevo = new Titular();
@@ -44,8 +44,7 @@ public class TitularJSON implements ControlImplementation<Titular>{
 	    
 	    nuevo.setFecha_alta_titular(dd+"/"+mm+"/"+aaaa);
 
-	    this.crear(nuevo);
-		
+	    return nuevo;
 	}
 
 	@Override

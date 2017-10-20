@@ -9,6 +9,8 @@ import java.awt.event.WindowEvent;
 
 import javax.swing.*;
 
+import Entidad.Titular;
+
 public class MenuPrincipal extends JFrame {
 
 	private JPanel contentPane;
@@ -39,15 +41,15 @@ public class MenuPrincipal extends JFrame {
 		JButton ayuda = new JButton(" AYUDA ");
 		ayuda.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
+				new EmitirLicencia(MenuPrincipal.this,new Titular(),new boolean[] {true, false, false, false, true, true,true}).setVisible(true);
+			}
 				
-					}
-				
-					public void windowClosed(WindowEvent e) {
-						setVisible(true);
-						setAlwaysOnTop(true);
-						setAlwaysOnTop(false);
-					}
-				});
+			public void windowClosed(WindowEvent e) {
+				setVisible(true);
+				setAlwaysOnTop(true);
+				setAlwaysOnTop(false);
+			}
+		});
 		
 		ayuda.setBounds(1197, 616, 115, 37);
 		ayuda.setFont(new Font("Arial", Font.PLAIN, 14));
@@ -110,12 +112,12 @@ public class MenuPrincipal extends JFrame {
 		
 		JLabel lblSelicence = new JLabel("Selicence");
 		lblSelicence.setFont(new Font("Viner Hand ITC", Font.BOLD, 75));
-		lblSelicence.setBounds(846, 506, 413, 86);
+		lblSelicence.setBounds(845, 518, 413, 86);
 		getContentPane().add(lblSelicence);
 		
 		JLabel lblNewLabel = new JLabel("Aprendiendo Juntos...");
 		lblNewLabel.setFont(new Font("Perpetua", Font.BOLD, 25));
-		lblNewLabel.setBounds(845, 576, 259, 37);
+		lblNewLabel.setBounds(844, 588, 259, 37);
 		getContentPane().add(lblNewLabel);
 		setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
 	}

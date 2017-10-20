@@ -24,6 +24,7 @@ import javax.swing.border.EmptyBorder;
 import javax.swing.border.MatteBorder;
 
 import Control.TitularJSON;
+import Entidad.Titular;
 import Utils.GestionCampos;
 import Utils.HTTPConection;
 
@@ -45,6 +46,7 @@ public class AltaTitular extends JDialog {
 	
 	public AltaTitular(JFrame principal) {
 		super(principal);
+		setTitle("Creación de nuevo titular");
 		GridBagLayout gridBagLayout = new GridBagLayout();
 		gridBagLayout.columnWidths = new int[]{0, 0};
 		gridBagLayout.rowHeights = new int[]{0, 0};
@@ -388,26 +390,43 @@ public class AltaTitular extends JDialog {
 		btnNewButton.setFont(new Font("Tahoma", Font.PLAIN, 12));
 		btnNewButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				//ver bien
-				if(GestionCampos.evaluarCampoVacio(textField.getText()) == true
-						|| GestionCampos.evaluarCampoVacio(textField_1.getText()) == true
-						|| GestionCampos.evaluarCampoVacio(textField_3.getText()) == true
-						|| GestionCampos.evaluarCampoVacio(textField_4.getText()) == true
-						|| GestionCampos.evaluarCampoVacio(textField_5.getText()) == true
-						|| GestionCampos.evaluarCampoVacio(textField_6.getText()) == true
-						|| GestionCampos.evaluarCampoVacio(textField_7.getText()) == true
-						) {
-					//muestro un JDialog que algunos campos estan vacios!!
-					JOptionPane.showMessageDialog(null, "Algunos campos estan Vacios...");
-				}
-				else if (GestionCampos.evaluarDia(textField_4.getText()) == false ||
-						GestionCampos.evaluarMes(textField_5.getText()) == false  ||
-						GestionCampos.evaluarAnio(textField_6.getText()) == false ) {
-					JOptionPane.showMessageDialog(null, "Fecha de Nacimiento Incorrecta");
+				
+				Object[] objetos = GestionCampos.evaluarTodosLosCampos(
+						new JTextField[] {
+								textField, //dni
+								textField_3, //nombres
+								textField_1, //apellidos
+								textField_7, //direccion
+								textField_4, //dia
+								textField_5, //mes
+								textField_6 //año
+						}, 
+						new String[] {
+								"dni",
+								"letras",
+								"letras",
+								"alfanumerico",
+								"dia",
+								"mes",
+								"año"
+						});
+				
+				if((int)objetos[1] != 0) {
+					System.out.println("aca entró " + (int)objetos[1]);
+					switch((int)objetos[1]) {
+						case 1: // Se refiere a que algun campo está vacio
+							JOptionPane.showMessageDialog(null, "Algunos de los campos están vacios");
+							break;
+						case 2: // Se refiere a que algun campo no cumple la variación correspodiente
+							JOptionPane.showMessageDialog(null, "Algunos de los campos no cumple la variación");
+							break;
+						default:
+							break;
+					}
+					return;
 				}
 				
-				else{
-				new TitularJSON().crear(
+				Titular nuevotitular = new TitularJSON().crear(
 						(String)comboBox.getSelectedItem(),
 						textField.getText(),
 						textField_3.getText(),
@@ -418,9 +437,40 @@ public class AltaTitular extends JDialog {
 						(String)comboBox_2.getSelectedItem(), (String)comboBox_1.getSelectedItem(),
 						chckbxNewCheckBox.getText());
 				
-					}
 				
-				new InterfazPrueba();
+				new EmitirLicencia(principal,
+						nuevotitular
+						,new boolean[] {
+						chckbxClaseA.isSelected(),
+						chckbxClaseB.isSelected(),
+						chckbxClaseC.isSelected(),
+						chckbxClaseD.isSelected(),
+						chckbxClaseE.isSelected(),
+						chckbxClaseF.isSelected(),
+						chckbxClaseG.isSelected()}).setVisible(true);
+				dispose();
+//				//ver bien
+//				if(GestionCampos.evaluarCampoVacio(textField.getText())
+//						|| GestionCampos.evaluarCampoVacio(textField_1.getText())
+//						|| GestionCampos.evaluarCampoVacio(textField_3.getText())
+//						|| GestionCampos.evaluarCampoVacio(textField_4.getText())
+//						|| GestionCampos.evaluarCampoVacio(textField_5.getText())
+//						|| GestionCampos.evaluarCampoVacio(textField_6.getText())
+//						|| GestionCampos.evaluarCampoVacio(textField_7.getText())
+//						) {
+//					//muestro un JDialog que algunos campos estan vacios!!
+//					JOptionPane.showMessageDialog(null, "Algunos campos estan Vacios...");
+//				}
+//				else if (GestionCampos.evaluarDia(textField_4.getText()) == false ||
+//						GestionCampos.evaluarMes(textField_5.getText()) == false  ||
+//						GestionCampos.evaluarAnio(textField_6.getText()) == false ) {
+//					JOptionPane.showMessageDialog(null, "Fecha de Nacimiento Incorrecta");
+//				}
+				
+//				else{
+				
+				
+				
 				
 			
 			}
