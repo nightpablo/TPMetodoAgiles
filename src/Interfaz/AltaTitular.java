@@ -1,4 +1,5 @@
 package Interfaz;
+ 
 
 import java.awt.Color;
 import java.awt.Font;
@@ -387,6 +388,7 @@ public class AltaTitular extends JDialog {
 		btnNewButton.setFont(new Font("Tahoma", Font.PLAIN, 12));
 		btnNewButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
+				//ver bien
 				if(GestionCampos.evaluarCampoVacio(textField.getText()) == true
 						|| GestionCampos.evaluarCampoVacio(textField_1.getText()) == true
 						|| GestionCampos.evaluarCampoVacio(textField_3.getText()) == true
@@ -417,8 +419,15 @@ public class AltaTitular extends JDialog {
 						chckbxNewCheckBox.getText());
 				
 					}
-				}
+				
+				new InterfazPrueba();
+				
+			
+			}
 		});
+		
+		
+		
 		btnNewButton.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
