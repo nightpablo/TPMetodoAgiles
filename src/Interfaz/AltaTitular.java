@@ -469,6 +469,8 @@ public class AltaTitular extends JDialog {
 					return;
 				}
 				
+				//TODO Verificar que en la base de datos no tengan un dni como el que estamos registrando!
+				
 				Titular nuevotitular = new TitularJSON().crear(
 						(String)comboBox.getSelectedItem(),
 						textField.getText(),

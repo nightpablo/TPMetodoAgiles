@@ -10,6 +10,7 @@ public class Licencia implements EntityImplementation{
 	public static final Object NOMBRE_TABLA = "licencias";
 	private Integer id_licencia;
 	private Integer id_titular;
+	//SACAR FECHA DE EMISION
 	private String fecha_emision;
 	private String inicio_vigencia;
 	private String fin_vigencia;
