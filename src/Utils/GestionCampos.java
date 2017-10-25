@@ -1,7 +1,5 @@
 package Utils;
 
-import java.util.Arrays;
-
 import javax.swing.JTextField;
 
 public class GestionCampos {
@@ -28,7 +26,7 @@ public class GestionCampos {
 	}
 	
 	public static boolean evaluarLetras(String entrada) {
-		if(!entrada.matches("[a-zA-Z"
+		if(!entrada.matches("[a-zA-Z "
 				+ "\\u00f1"
 				+ "\\u00d1"
 				+ "áàéèíìóòúùuÁÀÉÈÍÌÓÒÚÙ]+"))
@@ -48,21 +46,15 @@ public class GestionCampos {
 	public static boolean evaluarAnio(String entrada) {
 		return Integer.parseInt(entrada) >= 1900;
 	}
-	/*
-	public boolean evaluarEmail(String entrada) {
-		if(!entrada.matches("^[_A-Za-z0-9-\\+]+(\\.[_A-Za-z0-9-]+)*@[A-Za-z0-9-]+(\\.[A-Za-z0-9]+)*(\\.[A-Za-z]{2,})$"))
-			return false;
-		return true;
-	}*/
 	
-	public static Object[] evaluarTodosLosCampos(JTextField[] listacampos, String[] opciones) {
+	public static Object[] evaluarTodosLosCampos(String[] listacampos, String[] opciones) {
 		boolean[] listaCorrectos = new boolean[listacampos.length];
 		Integer alerta = 0;
 		
 		//Evaluamos si es campo vacio
 		int j=0;
-		for(JTextField i : listacampos) {
-			listaCorrectos[j] = !evaluarCampoVacio(i.getText());
+		for(String i : listacampos) {
+			listaCorrectos[j] = !evaluarCampoVacio(i);
 			if(!listaCorrectos[j]) alerta = 1;
 			j++;
 			
@@ -73,33 +65,32 @@ public class GestionCampos {
 		
 		//Sino, Evaluamos si cada uno cumple con las correspondientes...
 		j=0;
-		for(JTextField i : listacampos) {
+		for(String i : listacampos) {
 				switch(opciones[j]) {
 					case "numerico":
-						listaCorrectos[j] = evaluarNumérico(i.getText());
+						listaCorrectos[j] = evaluarNumérico(i);
 						break;
 					case "letras":
-						listaCorrectos[j] = evaluarLetras(i.getText());
+						listaCorrectos[j] = evaluarLetras(i);
 						break;
 					case "alfanumerico":
-						listaCorrectos[j] = evaluarAlfanumérico(i.getText());
+						listaCorrectos[j] = evaluarAlfanumérico(i);
 						break;
 					case "dni":
-						listaCorrectos[j] = evaluarNumérico(i.getText()) && evaluarDni(i.getText());
+						listaCorrectos[j] = evaluarNumérico(i) && evaluarDni(i);
 						break;
 					case "dia":
-						listaCorrectos[j] = evaluarNumérico(i.getText()) && evaluarDia(i.getText());
+						listaCorrectos[j] = evaluarNumérico(i) && evaluarDia(i);
 						break;
 					case "mes":
-						listaCorrectos[j] = evaluarNumérico(i.getText()) && evaluarMes(i.getText());
+						listaCorrectos[j] = evaluarNumérico(i) && evaluarMes(i);
 						break;
 					case "año":
-						listaCorrectos[j] = evaluarNumérico(i.getText()) && evaluarAnio(i.getText());
+						listaCorrectos[j] = evaluarNumérico(i) && evaluarAnio(i);
 						break;
 					default:
 						break;
 				}
-				System.out.println(opciones[j]+" - Evaluando: "+i.getText()+". Es "+listaCorrectos[j]);
 				if(!listaCorrectos[j]) alerta = 2;
 				j++;
 		}

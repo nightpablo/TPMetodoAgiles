@@ -1,81 +1,43 @@
 package Interfaz;
 
-import java.awt.EventQueue;
 
 import javax.swing.JFrame;
-import java.awt.FlowLayout;
 import java.awt.Font;
 
 import javax.swing.JTable;
-import javax.swing.JTextField;
-import javax.swing.DefaultListCellRenderer;
-import javax.swing.GroupLayout;
-import javax.swing.GroupLayout.Alignment;
 import javax.swing.JScrollPane;
 import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
-import javax.swing.table.TableColumn;
-import javax.swing.table.TableColumnModel;
 
+import Control.LicenciaJSON;
+import Control.TitularJSON;
 import Entidad.Titular;
 
-import javax.swing.ListSelectionModel;
-import javax.swing.LayoutStyle.ComponentPlacement;
 import javax.swing.JButton;
-import javax.swing.JCheckBox;
 import javax.swing.JPanel;
-import java.awt.Component;
-import java.awt.Container;
 
-import javax.swing.JSplitPane;
 import javax.swing.border.TitledBorder;
-import javax.swing.SwingConstants;
-import javax.swing.JDesktopPane;
 import javax.swing.JDialog;
-import javax.swing.JEditorPane;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
+
 import java.awt.GridBagLayout;
 import java.awt.GridBagConstraints;
 import java.awt.Insets;
+import javax.swing.JTextField;
+import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
 
+@SuppressWarnings("serial")
 public class EmitirLicencia extends JDialog{
 
 	private JTable table;
+	private JTextField textField;
 
 	public EmitirLicencia(JFrame principal, Titular titularentrada, boolean[] claseselegidas) {
 		super(principal);
-//		setBounds(200, 200, 800, 300);
 		setTitle("Emision de licencia");
 	
-		/*
-		table.setModel(new DefaultTableModel(
-			new Object[][] {
-				{"Clase A", "Ciclomotores motocicleta y triciclo motorizados",false},
-				{"Clase B", "Automoviles y camionetas con acoplado",true},
-				{"Clase C", "Camiones sin acoplados y los comprendidos en la clase B",true},
-				{"Clase D", "Servicio de transporte y de pasajero emergencia seguridad y los comprendidos en la clase d o c segun el caso",true},
-				{"Clase E", "Camiones articulados o con acoplado, maquinaria especial no agricola, y los comprendidos en la clase B y C",true},
-				{"Clase F", "Automotores especialmente adaptado para discapacitados",true},
-				{"Clase G", "Tractores agricolas y maquinaria especial agricola",true},
-			},
-			new String[] {
-				"Clase", "Descripcion", " "
-			}
-		) {
-			Class[] columnTypes = new Class[] {
-				String.class, Object.class, Object.class
-			};
-			public Class getColumnClass(int columnIndex) {
-				return columnTypes[columnIndex];
-			}
-			boolean[] columnEditables = new boolean[] {
-				false, true, true
-			};
-			public boolean isCellEditable(int row, int column) {
-				return columnEditables[column];
-			}
-		});
-	*/
 		
 		DefaultTableModel  model = new  DefaultTableModel() {
 			@Override
@@ -96,10 +58,24 @@ public class EmitirLicencia extends JDialog{
 		};
 		GridBagLayout gridBagLayout = new GridBagLayout();
 		gridBagLayout.columnWidths = new int[]{20, 100, 500, 500, 100, 20, 0};
-		gridBagLayout.rowHeights = new int[]{20, 238, 63, 44, 0};
+		gridBagLayout.rowHeights = new int[]{20, 0, 238, 63, 0, 44, 0};
 		gridBagLayout.columnWeights = new double[]{0.0, 0.0, 0.0, 0.0, 0.0, 0.0, Double.MIN_VALUE};
-		gridBagLayout.rowWeights = new double[]{0.0, 0.0, 0.0, 0.0, Double.MIN_VALUE};
+		gridBagLayout.rowWeights = new double[]{0.0, 0.0, 0.0, 0.0, 0.0, 0.0, Double.MIN_VALUE};
 		getContentPane().setLayout(gridBagLayout);
+		
+		JLabel lblNombreYApellido = new JLabel("Nombre y Apellido:");
+		GridBagConstraints gbc_lblNombreYApellido = new GridBagConstraints();
+		gbc_lblNombreYApellido.insets = new Insets(0, 0, 5, 5);
+		gbc_lblNombreYApellido.gridx = 1;
+		gbc_lblNombreYApellido.gridy = 1;
+		getContentPane().add(lblNombreYApellido, gbc_lblNombreYApellido);
+		
+		JLabel label = new JLabel(titularentrada.getApellidos()+", "+titularentrada.getNombres());
+		GridBagConstraints gbc_label = new GridBagConstraints();
+		gbc_label.insets = new Insets(0, 0, 5, 5);
+		gbc_label.gridx = 2;
+		gbc_label.gridy = 1;
+		getContentPane().add(label, gbc_label);
 		
 		JPanel panel_2 = new JPanel();
 		panel_2.setLayout(null);
@@ -108,7 +84,7 @@ public class EmitirLicencia extends JDialog{
 		gbc_panel_2.gridwidth = 4;
 		gbc_panel_2.insets = new Insets(0, 0, 5, 5);
 		gbc_panel_2.gridx = 1;
-		gbc_panel_2.gridy = 1;
+		gbc_panel_2.gridy = 2;
 		getContentPane().add(panel_2, gbc_panel_2);
 		
 		
@@ -143,7 +119,7 @@ public class EmitirLicencia extends JDialog{
 		gbc_btnCalcularVigencia.gridy = 0;
 		panel.add(btnCalcularVigencia, gbc_btnCalcularVigencia);
 		
-		JLabel lblNewLabel = new JLabel("Example dd/mm/aaaa");
+		JLabel lblNewLabel = new JLabel("Example 5 a\u00F1os");
 		lblNewLabel.setFont(new Font("Tahoma", Font.PLAIN, 18));
 		GridBagConstraints gbc_lblNewLabel = new GridBagConstraints();
 		gbc_lblNewLabel.anchor = GridBagConstraints.WEST;
@@ -154,7 +130,7 @@ public class EmitirLicencia extends JDialog{
 		gbc_panel.fill = GridBagConstraints.BOTH;
 		gbc_panel.insets = new Insets(0, 0, 5, 5);
 		gbc_panel.gridx = 2;
-		gbc_panel.gridy = 2;
+		gbc_panel.gridy = 3;
 		getContentPane().add(panel, gbc_panel);
 		
 		JPanel panel_1 = new JPanel();
@@ -187,25 +163,57 @@ public class EmitirLicencia extends JDialog{
 		gbc_panel_1.fill = GridBagConstraints.BOTH;
 		gbc_panel_1.insets = new Insets(0, 0, 5, 5);
 		gbc_panel_1.gridx = 3;
-		gbc_panel_1.gridy = 2;
+		gbc_panel_1.gridy = 3;
 		getContentPane().add(panel_1, gbc_panel_1);
 		
+		JLabel lblObservaciones = new JLabel("Observaciones:");
+		GridBagConstraints gbc_lblObservaciones = new GridBagConstraints();
+		gbc_lblObservaciones.anchor = GridBagConstraints.EAST;
+		gbc_lblObservaciones.insets = new Insets(0, 0, 5, 5);
+		gbc_lblObservaciones.gridx = 1;
+		gbc_lblObservaciones.gridy = 4;
+		getContentPane().add(lblObservaciones, gbc_lblObservaciones);
+		
+		textField = new JTextField();
+		GridBagConstraints gbc_textField = new GridBagConstraints();
+		gbc_textField.insets = new Insets(0, 0, 5, 5);
+		gbc_textField.fill = GridBagConstraints.HORIZONTAL;
+		gbc_textField.gridx = 2;
+		gbc_textField.gridy = 4;
+		getContentPane().add(textField, gbc_textField);
+		textField.setColumns(10);
+		
 		JButton button = new JButton("Imprimir");
+		button.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				
+				Titular i = new TitularJSON().crear(titularentrada);
+				new LicenciaJSON().crear(i.getId_titular(),i.getClases(),0,i.getFecha_nac(),5,textField.getText());
+				
+				JOptionPane.showMessageDialog(null, "Se creó un nuevo titular y se emitió una licencia");
+				dispose();
+			}
+		});
 		button.setFont(new Font("Arial", Font.PLAIN, 18));
 		GridBagConstraints gbc_button = new GridBagConstraints();
 		gbc_button.anchor = GridBagConstraints.EAST;
 		gbc_button.insets = new Insets(0, 0, 0, 5);
 		gbc_button.gridx = 2;
-		gbc_button.gridy = 3;
+		gbc_button.gridy = 5;
 		getContentPane().add(button, gbc_button);
 		
 		JButton button_1 = new JButton("Cancelar");
+		button_1.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				dispose();
+			}
+		});
 		button_1.setFont(new Font("Arial", Font.PLAIN, 18));
 		GridBagConstraints gbc_button_1 = new GridBagConstraints();
 		gbc_button_1.insets = new Insets(0, 0, 0, 5);
 		gbc_button_1.anchor = GridBagConstraints.WEST;
 		gbc_button_1.gridx = 3;
-		gbc_button_1.gridy = 3;
+		gbc_button_1.gridy = 5;
 		getContentPane().add(button_1, gbc_button_1);
 		model.addColumn("Clase");
 		model.addColumn("Descripcion");

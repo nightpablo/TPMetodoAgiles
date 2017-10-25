@@ -183,4 +183,8 @@ public class Titular implements EntityImplementation {
 		return jsonObject;
 	}
 
+	@Override
+	public boolean equals(Object obj) {
+		return getDNI().equals(((Titular)obj).getDNI());
+	}
 }

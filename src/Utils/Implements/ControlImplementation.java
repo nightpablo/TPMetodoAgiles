@@ -4,7 +4,7 @@ import java.util.ArrayList;
 
 public interface ControlImplementation<T> {
 	
-	public void crear(T entrada);
+	public T crear(T entrada);
 	
 	public void modificar(T entrada);
 	

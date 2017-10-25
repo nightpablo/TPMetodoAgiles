@@ -18,5 +18,15 @@ public class TableDatabase {
 		static final String FECHA_ALTA_TITULAR = "fecha_alta_titular";
 	}
 	
+	static class LICENCIA{
+		static final String ID_LICENCIA = "id";
+		static final String ID_TITULAR = "id_titular";
+		static final String INICIO_VIGENCIA = "inicio_vigencia";
+		static final String FECHA_EMISION = "fecha_emision";
+		static final String FIN_VIGENCIA = "fin_vigencia";
+		static final String USUARIO = "usuario";
+		static final String CLASES = "clases";
+		static final String OBSERVACIONES = "observaciones";
+	}
 
 }

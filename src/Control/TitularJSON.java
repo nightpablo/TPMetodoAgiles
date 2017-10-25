@@ -8,7 +8,6 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import Entidad.TableDatabase;
 import Entidad.Titular;
 import Utils.HTTPConection;
 import Utils.Implements.ControlImplementation;
@@ -16,8 +15,10 @@ import Utils.Implements.ControlImplementation;
 public class TitularJSON implements ControlImplementation<Titular>{
 
 	@Override
-	public void crear(Titular entrada) {
+	public Titular crear(Titular entrada) {
 		new HTTPConection().gestion(new Object[] {Titular.NOMBRE_TABLA,"POST",entrada.toJSON()});
+		ArrayList<Titular> t = listarEnLista();
+		return t.get(t.size()-1);
 	}
 	
 	public Titular crear(String tipo_dni, String dni, String nombres, String apellidos, 
@@ -34,6 +35,7 @@ public class TitularJSON implements ControlImplementation<Titular>{
 		nuevo.setGrupo(grupo);
 		nuevo.setFactor(factor);
 		nuevo.setDonante(donante.equals("Si")?true:false);
+		nuevo.setClases("B,F");
 		
 		Date d = new Date();
 		Calendar c = Calendar.getInstance();
