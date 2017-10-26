@@ -65,8 +65,8 @@ public class AltaTitular extends JDialog {
 		gbc_panel.gridy = 0;
 		getContentPane().add(panel, gbc_panel);
 		GridBagLayout gbl_panel = new GridBagLayout();
-		gbl_panel.columnWidths = new int[]{0, 0, 126, -3, 77, 0, 0, 63, 119, 0, 0};
-		gbl_panel.rowHeights = new int[]{0, 0, 0, 35, 0, 0, 10, 0, 21, 0, 27, 0, 0, 0};
+		gbl_panel.columnWidths = new int[]{0, 0, 175, -3, 175, 0, 175, 63, 119, 0, 0};
+		gbl_panel.rowHeights = new int[]{0, 0, 0, 35, 35, 35, 35, 35, 35, 0, 35, 35, 35, 0};
 		gbl_panel.columnWeights = new double[]{0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, Double.MIN_VALUE};
 		gbl_panel.rowWeights = new double[]{0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, Double.MIN_VALUE};
 		panel.setLayout(gbl_panel);
@@ -86,6 +86,7 @@ public class AltaTitular extends JDialog {
 		
 		Font fuenteelegida = new Font("Arial", Font.PLAIN, 18);
 		
+		
 		JComboBox<String> comboBox = new JComboBox<>();
 		comboBox.setFont(fuenteelegida);
 		comboBox.setToolTipText("Selecione el tipo de documento");
@@ -98,6 +99,7 @@ public class AltaTitular extends JDialog {
 		panel.add(comboBox, gbc_comboBox);
 		
 		textField = new JTextField();
+		textField.setFont(fuenteelegida);
 		textField.setToolTipText("Ingrese el n\u00BA de documento");
 		GridBagConstraints gbc_textField = new GridBagConstraints();
 		gbc_textField.gridwidth = 5;
@@ -111,7 +113,7 @@ public class AltaTitular extends JDialog {
 		JPanel panel_1 = new JPanel();
 		panel_1.setBorder(new MatteBorder(3, 3, 3, 3, (Color) new Color(0, 0, 0)));
 		GridBagConstraints gbc_panel_1 = new GridBagConstraints();
-		gbc_panel_1.gridheight = 9;
+		gbc_panel_1.gridheight = 8;
 		gbc_panel_1.insets = new Insets(0, 0, 5, 5);
 		gbc_panel_1.fill = GridBagConstraints.BOTH;
 		gbc_panel_1.gridx = 8;
@@ -196,6 +198,7 @@ public class AltaTitular extends JDialog {
 		panel.add(lblNombre, gbc_lblNombre);
 		
 		textField_3 = new JTextField();
+		textField_3.setFont(fuenteelegida);
 		textField_3.setToolTipText("Ingrese el nombre completo");
 		GridBagConstraints gbc_textField_3 = new GridBagConstraints();
 		gbc_textField_3.gridwidth = 5;
@@ -217,6 +220,7 @@ public class AltaTitular extends JDialog {
 		
 		textField_1 = new JTextField();
 		textField_1.setToolTipText("Ingrese los apellidos");
+		textField_1.setFont(fuenteelegida);
 		GridBagConstraints gbc_textField_1 = new GridBagConstraints();
 		gbc_textField_1.gridwidth = 5;
 		gbc_textField_1.insets = new Insets(0, 0, 5, 5);
@@ -236,6 +240,7 @@ public class AltaTitular extends JDialog {
 		panel.add(lblNewLabel_3, gbc_lblNewLabel_3);
 		
 		textField_7 = new JTextField();
+		textField_7.setFont(fuenteelegida);
 		textField_7.setToolTipText("Ingrese el domicilio (vera 3229 dpto 1)");
 		GridBagConstraints gbc_textField_7 = new GridBagConstraints();
 		gbc_textField_7.gridwidth = 5;
@@ -278,8 +283,10 @@ public class AltaTitular extends JDialog {
 		panel.add(lblNewLabel, gbc_lblNewLabel);
 		
 		textField_4 = new JTextField();
+		textField_4.setFont(fuenteelegida);
 		textField_4.setToolTipText("Ingrese el dia (1<=dd<=31)");
 		GridBagConstraints gbc_textField_4 = new GridBagConstraints();
+		gbc_textField_4.fill = GridBagConstraints.HORIZONTAL;
 		gbc_textField_4.insets = new Insets(0, 0, 5, 5);
 		gbc_textField_4.gridx = 2;
 		gbc_textField_4.gridy = 8;
@@ -296,8 +303,10 @@ public class AltaTitular extends JDialog {
 		panel.add(lblNewLabel_1, gbc_lblNewLabel_1);
 		
 		textField_5 = new JTextField();
+		textField_5.setFont(fuenteelegida);
 		textField_5.setToolTipText("Ingrese el mes (1<=mm<=12)");
 		GridBagConstraints gbc_textField_5 = new GridBagConstraints();
+		gbc_textField_5.fill = GridBagConstraints.HORIZONTAL;
 		gbc_textField_5.insets = new Insets(0, 0, 5, 5);
 		gbc_textField_5.gridx = 4;
 		gbc_textField_5.gridy = 8;
@@ -314,8 +323,10 @@ public class AltaTitular extends JDialog {
 		panel.add(lblNewLabel_2, gbc_lblNewLabel_2);
 		
 		textField_6 = new JTextField();
+		textField_6.setFont(fuenteelegida);
 		textField_6.setToolTipText("Ingrese el a\u00F1o (1900<=aaaa)");
 		GridBagConstraints gbc_textField_6 = new GridBagConstraints();
+		gbc_textField_6.fill = GridBagConstraints.HORIZONTAL;
 		gbc_textField_6.insets = new Insets(0, 0, 5, 5);
 		gbc_textField_6.gridx = 6;
 		gbc_textField_6.gridy = 8;
@@ -410,9 +421,8 @@ public class AltaTitular extends JDialog {
 		panel.add(lblCamposObligatorios, gbc_lblCamposObligatorios);
 		
 		JButton btnNewButton = new JButton("  Crear  ");
-		btnNewButton.setPreferredSize(new Dimension(100, 40));
-		btnNewButton.setFont(fuenteelegida);
-		btnNewButton.setFont(new Font("Tahoma", Font.PLAIN, 12));
+		btnNewButton.setPreferredSize(new Dimension(140, 40));
+		btnNewButton.setFont(new Font("Arial", Font.PLAIN, 18));
 		btnNewButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				
@@ -439,29 +449,81 @@ public class AltaTitular extends JDialog {
 				if((int)objetos[1] != 0) {
 					int j = 0;
 					JTextField[] listaCampos = new JTextField[] {textField,textField_3,textField_1,textField_7,textField_4,textField_5,textField_6};
-					System.out.println("aca entró " + (int)objetos[1]);
+					String str = "";
 					switch((int)objetos[1]) {
 						case 1: // Se refiere a que algun campo está vacio
 							
 							for(boolean i: (boolean[]) objetos[0]) {
 								if(i) 
 									listaCampos[j].setBackground(Color.WHITE);
-								else 
+								else {
 									listaCampos[j].setBackground(new Color(240,128,128));
+									switch(j) {
+										case 0:
+											str+="\ndni";
+											break;
+										case 1:
+											str+="\nnombres";
+											break;
+										case 2:
+											str+="\napellidos";
+											break;
+										case 3:
+											str+="\ndireccion";
+											break;
+										case 4:
+											str+="\ndia";
+											break;
+										case 5:
+											str+="\nmes";
+											break;
+										case 6:
+											str+="\naño";
+											break;
+										default:
+											break;
+									}
+								}
 								j++;
 							}
 							
-							JOptionPane.showMessageDialog(null, "Algunos de los campos están vacios");
+							JOptionPane.showMessageDialog(null, "Algunos de los campos están vacios"+str);
 							break;
 						case 2: // Se refiere a que algun campo no cumple la variación correspodiente
 							for(boolean i: (boolean[]) objetos[0]) {
 								if(i) 
 									listaCampos[j].setBackground(new Color(173,255,47));
-								else 
+								else {
 									listaCampos[j].setBackground(new Color(240,128,128));
+									switch(j) {
+										case 0:
+											str+="\ndni";
+											break;
+										case 1:
+											str+="\nnombres";
+											break;
+										case 2:
+											str+="\napellidos";
+											break;
+										case 3:
+											str+="\ndireccion";
+											break;
+										case 4:
+											str+="\ndia";
+											break;
+										case 5:
+											str+="\nmes";
+											break;
+										case 6:
+											str+="\naño";
+											break;
+										default:
+											break;
+									}
+								}
 								j++;
 							}
-							JOptionPane.showMessageDialog(null, "Algunos de los campos no cumple la variación");
+							JOptionPane.showMessageDialog(null, "Algunos de los campos no cumple la variación"+str);
 							break;
 						default:
 							break;
@@ -469,7 +531,6 @@ public class AltaTitular extends JDialog {
 					return;
 				}
 				
-				//TODO Verificar que en la base de datos no tengan un dni como el que estamos registrando!
 				
 				Titular nuevotitular = new TitularJSON().crear(
 						(String)comboBox.getSelectedItem(),
@@ -482,6 +543,10 @@ public class AltaTitular extends JDialog {
 						(String)comboBox_2.getSelectedItem(), (String)comboBox_1.getSelectedItem(),
 						chckbxNewCheckBox.getText());
 				
+				if(new TitularJSON().existeTitular(nuevotitular)) {
+					JOptionPane.showMessageDialog(null, "¡El DNI ya existe!");
+					return;
+				}
 				
 				new EmitirLicencia(principal,
 						nuevotitular
@@ -501,15 +566,15 @@ public class AltaTitular extends JDialog {
 		
 		
 		GridBagConstraints gbc_btnNewButton = new GridBagConstraints();
+		gbc_btnNewButton.anchor = GridBagConstraints.EAST;
 		gbc_btnNewButton.insets = new Insets(0, 0, 0, 5);
 		gbc_btnNewButton.gridx = 6;
 		gbc_btnNewButton.gridy = 12;
 		panel.add(btnNewButton, gbc_btnNewButton);
 		
 		JButton btnCancelar = new JButton("Cancelar");
-		btnCancelar.setPreferredSize(new Dimension(100, 40));
+		btnCancelar.setPreferredSize(new Dimension(140, 40));
 		btnCancelar.setFont(fuenteelegida);
-		btnCancelar.setFont(new Font("Tahoma", Font.PLAIN, 12));
 		btnCancelar.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent arg0) {

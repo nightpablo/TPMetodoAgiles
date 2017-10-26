@@ -67,6 +67,14 @@ public class TitularJSON implements ControlImplementation<Titular>{
                 return i;
         return null;
 	}
+	
+	public boolean existeTitular(Titular tit) {
+		ArrayList<Titular> Entry = listarEnLista();
+        for(Titular i: Entry)
+            if(i.equals(tit))
+                return true;
+        return false;
+	}
 
 	@Override
 	public ArrayList<Titular> listarEnLista() {
@@ -84,5 +92,20 @@ public class TitularJSON implements ControlImplementation<Titular>{
         return salida;
 	}
 
+	public Integer calcularVigencia(Titular t) {
+		Date d = new Date();
+		Calendar c = Calendar.getInstance();
+		c.setTime(d);
+	    String aaaa = Integer.toString(c.get(Calendar.YEAR));
+	    
+	    
+	    //      				año actual          -                 año de nacimiento
+	    Integer diferencia = Integer.parseInt(aaaa) - Integer.parseInt(t.getFecha_nac().split("/")[2]); 
+		if(diferencia<21) return 1;			//1 año la primera vez y 3 años las siguientes
+		else if(diferencia<=46) return 5;	//5 años
+		else if(diferencia<=60) return 4;	//4 años
+		else if(diferencia<=70) return 2;	//2 años
+		return 1;	//1 años
+	}
 
 }

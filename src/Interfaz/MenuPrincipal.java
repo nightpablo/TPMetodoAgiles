@@ -13,20 +13,14 @@ import Entidad.Titular;
 
 public class MenuPrincipal extends JFrame {
 
-	private JPanel contentPane;
 	public JPanel panel;
 
-	/**
-	 * Launch the application.
-	 */
 
 	public MenuPrincipal() {
 		super();
 		setResizable(true);
 		setSize(1380, 760);
-		//setLocationRelativeTo(null);
 		setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
-		//dispatchEvent(new WindowEvent(this, WindowEvent.WINDOW_CLOSING));
 		Home(); 
 		} 
 
@@ -42,12 +36,6 @@ public class MenuPrincipal extends JFrame {
 		ayuda.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				new EmitirLicencia(MenuPrincipal.this,new Titular(),new boolean[] {true, false, false, false, true, true,true}).setVisible(true);
-			}
-				
-			public void windowClosed(WindowEvent e) {
-				setVisible(true);
-				setAlwaysOnTop(true);
-				setAlwaysOnTop(false);
 			}
 		});
 		
