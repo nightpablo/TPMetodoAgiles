@@ -41,16 +41,6 @@ public class VariasPruebas {
 	
 	@Test
 	public void pruebadeVigencia() {
-		
-	}
-	
-	@Test
-	public void pruebaDeCosto() {
-		
-	}
-	@Test
-	public void pruebaDeTitular() {
-		
 		//Prueba de "Calcular vigencia"
 		assertEquals(new Integer(5), new Integer(new TitularJSON().calcularVigencia(titular))); // 44 años
 		titular.setFecha_nac("4/03/1970");
@@ -61,14 +51,14 @@ public class VariasPruebas {
 		assertEquals(new Integer(1), new Integer(new TitularJSON().calcularVigencia(titular))); // 71 años
 		titular.setFecha_nac("4/03/1999");
 		assertEquals(new Integer(1), new Integer(new TitularJSON().calcularVigencia(titular))); // 18 años
-		
-		
-		
-		
-		
-		
+
 		//Defecto
 		titular.setFecha_nac("4/03/1973");
+	}
+	
+	@Test
+	public void pruebaDeCosto() {
+		
 	}
 	
 	@Test

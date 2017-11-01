@@ -35,11 +35,12 @@ public class EmitirLicencia extends JDialog{
 	private JTable table;
 	private JTextField textField;
 	private Integer vigenciacalculada;
+	private boolean se_emitio;
 
 	public EmitirLicencia(JFrame principal, Titular titularentrada, boolean[] claseselegidas) {
 		super(principal);
 		vigenciacalculada=0;
-		
+		se_emitio = false;
 		setTitle("Emision de licencia");
 	
 		
@@ -202,29 +203,54 @@ public class EmitirLicencia extends JDialog{
 		getContentPane().add(textField, gbc_textField);
 		textField.setColumns(10);
 		
-		JButton button = new JButton("Imprimir");
-		button.setPreferredSize(new Dimension(110, 40));
-		button.addActionListener(new ActionListener() {
+		JButton btnEmitir = new JButton("Emitir");
+		btnEmitir.setPreferredSize(new Dimension(110, 40));
+		btnEmitir.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
+				if(!(boolean)table.getValueAt(0, 2)
+						&& !(boolean)table.getValueAt(1, 2)
+						&& !(boolean)table.getValueAt(2, 2)
+						&& !(boolean)table.getValueAt(3, 2)
+						&& !(boolean)table.getValueAt(4, 2)
+						&& !(boolean)table.getValueAt(5, 2)
+						&& !(boolean)table.getValueAt(6, 2)) {
+					JOptionPane.showMessageDialog(null, "¡Debe seleccionar al menos una clase!");
+					return;
+				}
 				if(vigenciacalculada==0) {
 					JOptionPane.showMessageDialog(null, "¡Falta calcular la vigencia!");
 					return;
 				}
-					
+				String str = "";
+				str += (boolean)table.getValueAt(0, 2)? "A," : "";
+				System.out.println(str);
+				str += (boolean)table.getValueAt(1, 2)? "B," : "";
+				System.out.println(str);
+				str += (boolean)table.getValueAt(2, 2)? "C," : "";
+				str += (boolean)table.getValueAt(3, 2)? "D," : "";
+				str += (boolean)table.getValueAt(4, 2)? "E," : "";
+				str += (boolean)table.getValueAt(5, 2)? "F," : "";
+				str += (boolean)table.getValueAt(6, 2)? "G," : "";
+				System.out.println(str);
+				str = str.substring(0, str.length()-1);
+				System.out.println(str);
+				
+				titularentrada.setClases(str);	
 				Titular i = new TitularJSON().crear(titularentrada);
 				new LicenciaJSON().crear(i.getId_titular(),i.getClases(),0,i.getFecha_nac(),5,textField.getText());
 				
 				JOptionPane.showMessageDialog(null, "Se creó un nuevo titular y se emitió una licencia");
-				dispose();
+				se_emitio = true;
+//				dispose();
 			}
 		});
-		button.setFont(new Font("Arial", Font.PLAIN, 18));
-		GridBagConstraints gbc_button = new GridBagConstraints();
-		gbc_button.anchor = GridBagConstraints.EAST;
-		gbc_button.insets = new Insets(0, 0, 0, 5);
-		gbc_button.gridx = 2;
-		gbc_button.gridy = 5;
-		getContentPane().add(button, gbc_button);
+		btnEmitir.setFont(new Font("Arial", Font.PLAIN, 18));
+		GridBagConstraints gbc_btnEmitir = new GridBagConstraints();
+		gbc_btnEmitir.anchor = GridBagConstraints.EAST;
+		gbc_btnEmitir.insets = new Insets(0, 0, 0, 5);
+		gbc_btnEmitir.gridx = 2;
+		gbc_btnEmitir.gridy = 5;
+		getContentPane().add(btnEmitir, gbc_btnEmitir);
 		
 		JButton btnCancelar = new JButton("Cancelar");
 		btnCancelar.setPreferredSize(new Dimension(110, 40));
@@ -270,6 +296,24 @@ public class EmitirLicencia extends JDialog{
 		table.getColumnModel().getColumn(2).setMaxWidth(30);
 		table.setFont(new Font("Arial", Font.PLAIN, 20));
 		table.setRowHeight(30);
+		
+		JButton btnImprimir = new JButton("Imprimir");
+		btnImprimir.setPreferredSize(new Dimension(110, 40));
+		btnImprimir.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				if(!se_emitio) {
+					JOptionPane.showMessageDialog(null, "¡Se debe emitir la licencia primero!");
+					return;
+				}
+				// aca invocamos la interfaz que tenga q terminar pitu
+			}
+		});
+		btnImprimir.setFont(new Font("Arial", Font.PLAIN, 18));
+		GridBagConstraints gbc_btnImprimir = new GridBagConstraints();
+		gbc_btnImprimir.insets = new Insets(0, 0, 0, 5);
+		gbc_btnImprimir.gridx = 4;
+		gbc_btnImprimir.gridy = 5;
+		getContentPane().add(btnImprimir, gbc_btnImprimir);
 		
 		pack();
 	}

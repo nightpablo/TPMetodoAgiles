@@ -35,7 +35,7 @@ public class GestionCampos {
 	}
 	
 	public static boolean evaluarDni(String entrada) {
-		return entrada.length() <= 8 && entrada.length() >= 7;
+		return entrada.length() <= 8 && entrada.length() >= 6;
 	}
 	public static boolean evaluarDia(String entrada) {
 		return Integer.parseInt(entrada) <= 31 && Integer.parseInt(entrada) >= 1;
