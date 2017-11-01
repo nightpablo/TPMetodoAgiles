@@ -40,6 +40,15 @@ public class VariasPruebas {
 	}
 	
 	@Test
+	public void pruebadeVigencia() {
+		
+	}
+	
+	@Test
+	public void pruebaDeCosto() {
+		
+	}
+	@Test
 	public void pruebaDeTitular() {
 		
 		//Prueba de "Calcular vigencia"
