@@ -75,6 +75,14 @@ public class TitularJSON implements ControlImplementation<Titular>{
                 return true;
         return false;
 	}
+	
+	public boolean existeTitular(Integer DNI) {
+		ArrayList<Titular> Entry = listarEnLista();
+        for(Titular i: Entry)
+            if(i.getDNI().equals(DNI))
+                return true;
+        return false;
+	}
 
 	@Override
 	public ArrayList<Titular> listarEnLista() {
