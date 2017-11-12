@@ -21,6 +21,10 @@ public class Licencia implements EntityImplementation{
 	public Licencia() {
 
 	}
+	
+	public Licencia(JSONObject jsonObject) {
+		toEntity(jsonObject);
+	}
 
 	public Integer getId_licencia() {
 		return id_licencia;

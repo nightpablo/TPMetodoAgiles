@@ -11,7 +11,16 @@ import javax.swing.table.DefaultTableModel;
 
 import Control.LicenciaJSON;
 import Control.TitularJSON;
+import Entidad.Licencia;
 import Entidad.Titular;
+import Utils.Impresion;
+import net.sf.jasperreports.engine.JRException;
+import net.sf.jasperreports.engine.JRExporterParameter;
+import net.sf.jasperreports.engine.JasperFillManager;
+import net.sf.jasperreports.engine.JasperPrint;
+import net.sf.jasperreports.engine.JasperReport;
+import net.sf.jasperreports.engine.export.JRPdfExporter;
+import net.sf.jasperreports.engine.util.JRLoader;
 
 import javax.swing.JButton;
 import javax.swing.JPanel;
@@ -26,6 +35,7 @@ import java.awt.GridBagConstraints;
 import java.awt.Insets;
 import javax.swing.JTextField;
 import java.awt.event.ActionListener;
+import java.io.IOException;
 import java.awt.event.ActionEvent;
 import java.awt.Dimension;
 
@@ -36,9 +46,12 @@ public class EmitirLicencia extends JDialog{
 	private JTextField textField;
 	private Integer vigenciacalculada;
 	private boolean se_emitio;
-
+	private Titular nuevo_titular;
+	private Licencia nueva_licencia;
+	
 	public EmitirLicencia(JFrame principal, Titular titularentrada, boolean[] claseselegidas) {
 		super(principal);
+		nuevo_titular = titularentrada;
 		vigenciacalculada=0;
 		se_emitio = false;
 		setTitle("Emision de licencia");
@@ -76,7 +89,7 @@ public class EmitirLicencia extends JDialog{
 		gbc_lblNombreYApellido.gridy = 1;
 		getContentPane().add(lblNombreYApellido, gbc_lblNombreYApellido);
 		
-		JLabel label = new JLabel(titularentrada.getApellidos()+", "+titularentrada.getNombres());
+		JLabel label = new JLabel(nuevo_titular.getApellidos()+", "+nuevo_titular.getNombres());
 		label.setFont(new Font("Arial", Font.PLAIN, 18));
 		GridBagConstraints gbc_label = new GridBagConstraints();
 		gbc_label.insets = new Insets(0, 0, 5, 5);
@@ -144,7 +157,7 @@ public class EmitirLicencia extends JDialog{
 		
 		btnCalcularVigencia.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				vigenciacalculada = new TitularJSON().calcularVigencia(titularentrada);
+				vigenciacalculada = new TitularJSON().calcularVigencia(nuevo_titular);
 				lblNewLabel.setText(vigenciacalculada+" años");
 			}
 		});
@@ -235,9 +248,9 @@ public class EmitirLicencia extends JDialog{
 				str = str.substring(0, str.length()-1);
 				System.out.println(str);
 				
-				titularentrada.setClases(str);	
-				Titular i = new TitularJSON().crear(titularentrada);
-				new LicenciaJSON().crear(i.getId_titular(),i.getClases(),0,i.getFecha_nac(),5,textField.getText());
+				nuevo_titular.setClases(str);	
+				nuevo_titular = new TitularJSON().crear(nuevo_titular);
+				nueva_licencia = new LicenciaJSON().crear(nuevo_titular.getId_titular(),nuevo_titular.getClases(),0,nuevo_titular.getFecha_nac(),5,textField.getText());
 				
 				JOptionPane.showMessageDialog(null, "Se creó un nuevo titular y se emitió una licencia");
 				se_emitio = true;
@@ -305,7 +318,25 @@ public class EmitirLicencia extends JDialog{
 					JOptionPane.showMessageDialog(null, "¡Se debe emitir la licencia primero!");
 					return;
 				}
-				// aca invocamos la interfaz que tenga q terminar pitu
+
+				try {
+					String ubicacion_jasper = "src/Utils/report1.jasper";//Cambiar por el nombre de .jasper
+					String nombre_pdf = "reporte1.pdf";
+					
+					Impresion imp = new Impresion();
+					imp.setting(nuevo_titular, nueva_licencia);
+					JasperReport report = (JasperReport) JRLoader.loadObjectFromFile(ubicacion_jasper);
+					JasperPrint jasperprint = JasperFillManager.fillReport(report, null, imp);
+					JRPdfExporter exporter = new JRPdfExporter();  
+			        exporter.setParameter(JRExporterParameter.JASPER_PRINT, jasperprint); 
+			        exporter.setParameter(JRExporterParameter.OUTPUT_FILE, new java.io.File(nombre_pdf)); //Cambiar por el nombre del pdf que se generará
+			        exporter.exportReport();
+			        Runtime.getRuntime().exec("rundll32 url.dll,FileProtocolHandler "+nombre_pdf);
+				} catch (JRException | IOException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+				
 			}
 		});
 		btnImprimir.setFont(new Font("Arial", Font.PLAIN, 18));

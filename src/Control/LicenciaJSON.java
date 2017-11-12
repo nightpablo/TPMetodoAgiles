@@ -5,8 +5,11 @@ import java.util.Calendar;
 import java.util.Date;
 
 import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import Entidad.Licencia;
+import Entidad.Titular;
 import Utils.HTTPConection;
 import Utils.Implements.ControlImplementation;
 
@@ -24,7 +27,7 @@ public class LicenciaJSON implements ControlImplementation<Licencia>{
 		return null;
 	}
 	
-	public void crear(Integer id_titular, String clases, Integer usuario, String fecha_nacimiento, Integer cantidadaño, String observaciones) {
+	public Licencia crear(Integer id_titular, String clases, Integer usuario, String fecha_nacimiento, Integer cantidadaño, String observaciones) {
 		Licencia nuevo = new Licencia();
 		nuevo.setId_titular(id_titular);
 		nuevo.setClases(clases);
@@ -46,6 +49,8 @@ public class LicenciaJSON implements ControlImplementation<Licencia>{
 	    nuevo.setObservaciones(observaciones);
 	    
 		crear(nuevo);
+		ArrayList<Licencia> t = listarEnLista();
+		return t.get(t.size()-1);
 		
 	}
 
@@ -71,14 +76,14 @@ public class LicenciaJSON implements ControlImplementation<Licencia>{
 	public ArrayList<Licencia> listarEnLista() {
         ArrayList<Licencia> salida = null;
         
-//		try {
+		try {
 			JSONArray lista = (JSONArray) new HTTPConection().gestion(new Object[] {Licencia.NOMBRE_TABLA,"GET"});
 	        salida = new ArrayList<Licencia>();
-//			for(int i=0;i<lista.length();i++)
-//				salida.add(new Licencia((JSONObject) lista.get(i)));
-//		} catch (JSONException e) {
-//			e.printStackTrace();
-//		}
+			for(int i=0;i<lista.length();i++)
+				salida.add(new Licencia((JSONObject) lista.get(i)));
+		} catch (JSONException e) {
+			e.printStackTrace();
+		}
 
         return salida;
 	}
