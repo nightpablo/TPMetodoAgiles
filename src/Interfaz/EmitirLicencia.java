@@ -386,7 +386,7 @@ public class EmitirLicencia extends JDialog{
 				try {
 					String f = new File("").getCanonicalPath();
 					f = f.replace("\\", "\\"+"\\");
-					f+= "\\"+"\\"+"src"+"\\"+"\\"+"utils"+"\\"+"\\";
+					f+= "\\"+"\\"+"src"+"\\"+"\\"+"Imagenes"+"\\"+"\\";
 					HashMap<String, Object> parameter = new HashMap<String, Object>();
 					parameter.put("pathFrente",f+"FrenteLicencia.jpg");
 					parameter.put("pathAtras",f+"ParteAtras.jpg");
@@ -425,7 +425,7 @@ public class EmitirLicencia extends JDialog{
 				try {
 					String f = new File("").getCanonicalPath();
 					f = f.replace("\\", "\\"+"\\");
-					f+= "\\"+"\\"+"src"+"\\"+"\\"+"utils"+"\\"+"\\"+"generarComprobante.jpg";
+					f+= "\\"+"\\"+"src"+"\\"+"\\"+"Imagenes"+"\\"+"\\"+"generarComprobante.jpg";
 					HashMap<String, Object> parameter = new HashMap<String, Object>();
 					parameter.put("path",f);
 					
