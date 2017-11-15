@@ -8,6 +8,7 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import Entidad.Licencia;
 import Entidad.Titular;
 import Utils.HTTPConection;
 import Utils.Implements.ControlImplementation;
@@ -108,6 +109,20 @@ public class TitularJSON implements ControlImplementation<Titular>{
         return salida;
 	}
 
+	public ArrayList<Titular> buscarTitularesConLicenciasExpiradas(ArrayList<Licencia> licenciasExpiradas) {
+        
+		ArrayList<Titular> titularesConLicenciaExpirada = new ArrayList<Titular>();
+        
+		
+		for(Licencia l: licenciasExpiradas)
+		{
+			Titular tE = this.buscarPorId(l.getId_titular());
+			titularesConLicenciaExpirada.add(tE);
+		}
+
+        return titularesConLicenciaExpirada;
+	}
+	
 	public Integer calcularVigencia(Titular t) {
 		Date d = new Date();
 		Calendar c = Calendar.getInstance();

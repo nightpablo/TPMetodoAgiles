@@ -47,6 +47,7 @@ public class ListadosDeLicencias extends JDialog{
 
 	private JTable table;
 	private ArrayList <Licencia> licenciasExpiradas = null;
+	private ArrayList <Titular> titularesLicenciasExpiradas = null;
 	
 	public ListadosDeLicencias(JFrame principal) {
 		super(principal);
@@ -106,27 +107,23 @@ public class ListadosDeLicencias extends JDialog{
 				LicenciaJSON lj = new LicenciaJSON();
 				licenciasExpiradas = lj.buscarLicenciasExpiradas();
 				
+				TitularJSON tj = new TitularJSON();
+				titularesLicenciasExpiradas = tj.buscarTitularesConLicenciasExpiradas(licenciasExpiradas);
+				
 				System.out.println(licenciasExpiradas.isEmpty());
 				System.out.println("Size licencias expiradas: "+licenciasExpiradas.size());
 
 			
-				
-				/*for(int i=0;i<7;i++) {
-					model.addRow(new Object [] {"","","","","",""});
-				}*/
-				
 				for(int i=0; i<licenciasExpiradas.size(); i++)
 		        {
-		        	model.addRow(new Object [] {"","","","","",""});
-					for(int j=0; j<6; j++)
-					{
-						model.setValueAt(licenciasExpiradas.get(i).getId_licencia(), i, j);
-						model.setValueAt(licenciasExpiradas.get(i).getId_licencia(), i, j);
-						model.setValueAt(licenciasExpiradas.get(i).getId_titular(), i, j);
-						model.setValueAt(licenciasExpiradas.get(i).getClases(), i, j);
-						model.setValueAt(licenciasExpiradas.get(i).getFecha_emision(), i, j);
-						model.setValueAt(licenciasExpiradas.get(i).getFin_vigencia(), i, j);
-					}
+		        	model.addRow(new Object [] {"","","","","",""});			
+						model.setValueAt(titularesLicenciasExpiradas.get(i).getTipo_DNI(), i, 0);
+						model.setValueAt(titularesLicenciasExpiradas.get(i).getDNI(), i, 1);
+						model.setValueAt(titularesLicenciasExpiradas.get(i).getNombres()+" "+
+								titularesLicenciasExpiradas.get(i).getApellidos(), i, 2);
+						model.setValueAt(licenciasExpiradas.get(i).getClases(), i, 3);
+						model.setValueAt(licenciasExpiradas.get(i).getFecha_emision(), i, 4);
+						model.setValueAt(licenciasExpiradas.get(i).getFin_vigencia(), i, 5);
 		        }
 			}
 		});
@@ -151,7 +148,7 @@ public class ListadosDeLicencias extends JDialog{
 		
 		
 		JScrollPane scrollPane = new JScrollPane();
-		scrollPane.setBounds(0, 0, 1250, 233);
+		scrollPane.setBounds(0, 0, 1250, 311);
 		panel_2.add(scrollPane);
 		scrollPane.setAutoscrolls(true);
 		
@@ -160,8 +157,7 @@ public class ListadosDeLicencias extends JDialog{
 		
 		table.setModel(model);
 		
-
-							
+				
 	
 		JButton btnCancelar = new JButton("Cancelar");
 		btnCancelar.setPreferredSize(new Dimension(110, 40));

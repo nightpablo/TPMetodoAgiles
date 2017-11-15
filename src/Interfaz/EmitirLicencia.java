@@ -35,10 +35,13 @@ import java.awt.GridBagConstraints;
 import java.awt.Insets;
 import javax.swing.JTextField;
 import java.awt.event.ActionListener;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 import java.io.IOException;
 import java.util.Calendar;
 import java.util.Date;
 import java.awt.event.ActionEvent;
+import java.awt.Checkbox;
 import java.awt.Dimension;
 
 @SuppressWarnings("serial")
@@ -51,8 +54,15 @@ public class EmitirLicencia extends JDialog{
 	private boolean se_emitio;
 	private Titular nuevo_titular;
 	private Licencia nueva_licencia;
-	Integer fecha_nacimiento;
-	Integer edad;
+	private Integer fecha_nacimiento;
+	private Integer edad;
+	private Checkbox a;
+	private Checkbox b;
+	private Checkbox c;
+	private Checkbox d;
+	private Checkbox e;
+	private Checkbox f;
+	private Checkbox g; 
 	
 	public EmitirLicencia(JFrame principal, Titular titularentrada, boolean[] claseselegidas) {
 		super(principal);
@@ -61,8 +71,13 @@ public class EmitirLicencia extends JDialog{
 		costocalculado=0;
 		se_emitio = false;
 		setTitle("Emision de licencia");
-	
-
+		a = new Checkbox();
+		b = new Checkbox();
+		c = new Checkbox();
+		d = new Checkbox();
+		e = new Checkbox();
+		f = new Checkbox();
+		g = new Checkbox();
 			
 		DefaultTableModel  model = new  DefaultTableModel() {
 			@Override
@@ -285,6 +300,7 @@ public class EmitirLicencia extends JDialog{
 			   //System.out.println("DiaN: "+ diaNacimiento + "MesN: " + mesNacimiento+ "AñoN: "+ añoNacimiento);
 
 			  //Validacion edad para clases C, D y E
+			    //LLamar funcion controlarLicenciaProfesional
 				if(str.contains("C")||str.contains("D")||str.contains("E"))
 				{
 					edad=añoActual-añoNacimiento;
@@ -360,6 +376,7 @@ public class EmitirLicencia extends JDialog{
 //				dispose();
 			}
 		});
+		
 		btnEmitir.setFont(new Font("Arial", Font.PLAIN, 18));
 		GridBagConstraints gbc_btnEmitir = new GridBagConstraints();
 		gbc_btnEmitir.anchor = GridBagConstraints.EAST;
@@ -385,9 +402,19 @@ public class EmitirLicencia extends JDialog{
 		model.addColumn("Clase");
 		model.addColumn("Descripcion");
 		model.addColumn("");
-		for(int i=0;i<7;i++) {
+		/*for(int i=0;i<7;i++) {
 			model.addRow(new Object [] {"","",claseselegidas[i]});
-		}
+		}*/
+		
+		
+		model.addRow(new Object [] {"","",a.getState()});
+		model.addRow(new Object [] {"","",b.getState()});
+		model.addRow(new Object [] {"","",c.getState()});
+		model.addRow(new Object [] {"","",d.getState()});
+		model.addRow(new Object [] {"","",e.getState()});
+		model.addRow(new Object [] {"","",f.getState()});
+		model.addRow(new Object [] {"","",g.getState()});
+		
 		model.setValueAt("Clase A", 0, 0);
 		model.setValueAt("Ciclomotores motocicleta y triciclo motorizados", 0, 1);
 		model.setValueAt("Clase B", 1, 0);
@@ -412,6 +439,7 @@ public class EmitirLicencia extends JDialog{
 		table.getColumnModel().getColumn(2).setMaxWidth(30);
 		table.setFont(new Font("Arial", Font.PLAIN, 20));
 		table.setRowHeight(30);
+		
 		
 		JButton btnImprimir = new JButton("Imprimir");
 		btnImprimir.setPreferredSize(new Dimension(110, 40));

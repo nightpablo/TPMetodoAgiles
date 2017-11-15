@@ -119,40 +119,7 @@ public class LicenciaJSON implements ControlImplementation<Licencia>{
     	    		}
     	    	}
     	    }
-    	   /* System.out.println("AV: "+diaFinVigencia+"/"+mesFinVigencia+"/"+anioFinVigencia);
-    	    System.out.println("AA: "+diaActual+"/"+mesActual+"/"+anioActual);
-    	    System.out.println("anioFinVigencia<anioActual: "+ (anioFinVigencia<anioActual) );
-    	    System.out.println((2017==2017) );
-    	    System.out.println("anioFinVigencia: "+anioFinVigencia+"==anioActual: "+anioActual+" :" +(anioFinVigencia==anioActual) );
-    	    System.out.println("mesFinVigencia<mesActual: "+ (mesFinVigencia<mesActual) );
-    	    System.out.println("mesFinVigencia==mesActual: "+ (mesFinVigencia==mesActual) );
-    	    System.out.println("diaFinVigencia<diaActual: "+ (diaFinVigencia<diaActual) );
-*/
-    	   /* 
-            if(anioFinVigencia<anioActual)
-            {
-            	System.out.println("añoFinVigencia<añoActual");
-            	licenciasExpiradas.add(l);
-            	System.out.println(licenciasExpiradas.isEmpty());
-            }
-            else if(anioFinVigencia==anioActual)
-            {
-            	System.out.println("añoFinVigencia==añoActual");
-            	if(mesFinVigencia<mesActual)
-            	{
-            		System.out.println("mesFinVigencia<mesActual");
-            		licenciasExpiradas.add(l);
-            	}
-            	else if(mesFinVigencia==mesActual)
-            	{
-            		if(diaFinVigencia<diaActual)
-            		{
-            			System.out.println("diaFinVigencia<diaActual");
-            			licenciasExpiradas.add(l);
-            		}
-            	}
-            		
-            }*/
+    	 
         }
         return licenciasExpiradas;
 	}
