@@ -50,15 +50,10 @@ public class EmitirLicencia extends JDialog{
 	private JTable table;
 	private JTextField textField;
 	private Integer vigenciacalculada;
-<<<<<<< HEAD
 	private Integer costocalculado;
-=======
-	private Integer costoCalculado;
->>>>>>> branch 'develop' of https://github.com/nightpablo/TPMetodoAgiles
 	private boolean se_emitio;
 	private Titular nuevo_titular;
 	private Licencia nueva_licencia;
-<<<<<<< HEAD
 	private Integer fecha_nacimiento;
 	private Integer edad;
 	private Checkbox a;
@@ -68,9 +63,6 @@ public class EmitirLicencia extends JDialog{
 	private Checkbox e;
 	private Checkbox f;
 	private Checkbox g; 
-=======
-	private boolean se_toco_clases;
->>>>>>> branch 'develop' of https://github.com/nightpablo/TPMetodoAgiles
 	
 	public EmitirLicencia(JFrame principal, Titular titularentrada, boolean[] claseselegidas) {
 		super(principal);
@@ -79,7 +71,6 @@ public class EmitirLicencia extends JDialog{
 		costocalculado=0;
 		se_emitio = false;
 		setTitle("Emision de licencia");
-<<<<<<< HEAD
 		a = new Checkbox();
 		b = new Checkbox();
 		c = new Checkbox();
@@ -88,10 +79,6 @@ public class EmitirLicencia extends JDialog{
 		f = new Checkbox();
 		g = new Checkbox();
 			
-=======
-		se_toco_clases = true;
-		
->>>>>>> branch 'develop' of https://github.com/nightpablo/TPMetodoAgiles
 		DefaultTableModel  model = new  DefaultTableModel() {
 			@Override
 			public Class<?> getColumnClass(int column) {
@@ -206,16 +193,12 @@ public class EmitirLicencia extends JDialog{
 		panel_1.setLayout(gbl_panel_1);
 		
 		JButton btnCalcularCosto = new JButton("Calcular Costo");
-<<<<<<< HEAD
 		btnCalcularCosto.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				
 				costocalculado=1;
 			}
 		});
-=======
-		
->>>>>>> branch 'develop' of https://github.com/nightpablo/TPMetodoAgiles
 		btnCalcularCosto.setPreferredSize(new Dimension(200, 40));
 		btnCalcularCosto.setFont(new Font("Arial", Font.PLAIN, 18));
 		GridBagConstraints gbc_btnCalcularCosto = new GridBagConstraints();
