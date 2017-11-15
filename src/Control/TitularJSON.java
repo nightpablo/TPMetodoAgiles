@@ -1,8 +1,12 @@
 package Control;
 
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
+
+import javax.swing.JOptionPane;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -135,8 +139,157 @@ public class TitularJSON implements ControlImplementation<Titular>{
 		if(diferencia<21) return 1;			//1 año la primera vez y 3 años las siguientes
 		else if(diferencia<=46) return 5;	//5 años
 		else if(diferencia<=60) return 4;	//4 años
-		else if(diferencia<=70) return 2;	//2 años
+		else if(diferencia<=70) return 3;	//3 años
 		return 1;	//1 años
 	}
+	
+	public int calcularCosto(String listaClases, int vigencia) {
+		
+		int costo= 0;
+		int costo_administrativo= 8;
+		
+		System.out.println("Valor de Vigencia: " + vigencia);
+		if(vigencia == 0) {
+			JOptionPane.showMessageDialog(null, "¡Se debe calcular primero la VIGENCIA!");
+			//return;
+			return 0;
+		}
+	for(String i: listaClases.split(",")) {
+		switch (i) {
+		//---------------Clase A-----------------------------------------
+				case "A":
+		       switch (vigencia) {
+		  		case 5:
+		        	costo+= 40;
+		       		break;
+		 		case 4:
+		       		costo+= 30;
+		       		break;
+				case 3:
+		      		costo+= 25;
+		       		 break;
+		  		case 1:
+		      		costo+= 20;
+		      		 break;
+				}
+		        break;
 
+		//---------------Clase B-----------------------------------------
+		        case "B":
+		        switch (vigencia) {
+		  		case 5:
+		        		 costo+= 40;
+		       		 break;
+		 		case 4:
+		       		 costo+= 30;
+		       		 break;
+				case 3:
+		      		costo+= 25;
+		       		 break;
+		  		case 1:
+		      		costo= 20;
+		      		break;
+				}
+		        break;
+
+		//---------------Clase C --------------------------------
+			     case "C":
+		       switch (vigencia) {
+		  		case 5:
+		        	costo+= 47;
+		       		 break;
+		 		case 4:
+		       		 costo+= 35;
+		       		 break;
+				case 3:
+		      		costo+= 30;
+		       		 break;
+		  		case 1:
+		      		costo+= 23;
+		      		break;
+				}
+		        break;
+
+		//---------------Clase D--------------------------------
+		       case "D":
+				switch (vigencia) {
+		  		case 5:
+		        	costo+= 59;
+		       		 break;
+		 		case 4:
+		       		 costo+= 44;
+		       		 break;
+				case 3:
+		      		costo+= 39;
+		       		 break;
+		  		case 1:
+		      		costo+= 29;
+		      		 break;
+				}
+		        break;
+
+		//---------------Clase E--------------------------------
+		       case "E":
+		       switch (vigencia) {
+		  		case 5:
+		        	costo+= 59;
+		       		 break;
+		 		case 4:
+		       		 costo+= 44;
+		       		 break;
+				case 3:
+		      		costo+= 39;
+		       		 break;
+		  		case 1:
+		      		costo+= 29;
+		      		break;
+				}
+		        break;
+
+		//---------------Clase F--------------------------------
+		       case "F":
+			        switch (vigencia) {
+			  		case 5:
+			        		 costo+= 40;
+			       		 break;
+			 		case 4:
+			       		 costo+= 30;
+			       		 break;
+					case 3:
+			      		costo+= 25;
+			       		 break;
+			  		case 1:
+			      		costo= 20;
+			      		break;
+					}
+			        break;
+
+		//---------------Clase G--------------------------------
+		       case "G":
+		       switch (vigencia) {
+		  		case 5:
+		        	costo+= 40;
+		       		 break;
+		 		case 4:
+		       		 costo+= 30;
+		       		 break;
+				case 3:
+		      		costo+= 25;
+		       		 break;
+		  		case 1:
+		      		costo+= 20;
+		      		break;
+				}
+		        break;
+		        
+		        // Opcion por defecto
+				default:
+				System.out.println("No existe esa clase o es incorrecta: Clase");
+		        break;
+		 
+			}
+		}
+	return costo + costo_administrativo;
+	}
+	
 }
