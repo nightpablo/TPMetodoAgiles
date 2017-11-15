@@ -36,6 +36,8 @@ import java.awt.Insets;
 import javax.swing.JTextField;
 import java.awt.event.ActionListener;
 import java.io.IOException;
+import java.util.Calendar;
+import java.util.Date;
 import java.awt.event.ActionEvent;
 import java.awt.Dimension;
 
@@ -45,18 +47,23 @@ public class EmitirLicencia extends JDialog{
 	private JTable table;
 	private JTextField textField;
 	private Integer vigenciacalculada;
+	private Integer costocalculado;
 	private boolean se_emitio;
 	private Titular nuevo_titular;
 	private Licencia nueva_licencia;
+	Integer fecha_nacimiento;
+	Integer edad;
 	
 	public EmitirLicencia(JFrame principal, Titular titularentrada, boolean[] claseselegidas) {
 		super(principal);
 		nuevo_titular = titularentrada;
 		vigenciacalculada=0;
+		costocalculado=0;
 		se_emitio = false;
 		setTitle("Emision de licencia");
 	
-		
+
+			
 		DefaultTableModel  model = new  DefaultTableModel() {
 			@Override
 			public Class<?> getColumnClass(int column) {
@@ -174,6 +181,12 @@ public class EmitirLicencia extends JDialog{
 		panel_1.setLayout(gbl_panel_1);
 		
 		JButton btnCalcularCosto = new JButton("Calcular Costo");
+		btnCalcularCosto.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				
+				costocalculado=1;
+			}
+		});
 		btnCalcularCosto.setPreferredSize(new Dimension(200, 40));
 		btnCalcularCosto.setFont(new Font("Arial", Font.PLAIN, 18));
 		GridBagConstraints gbc_btnCalcularCosto = new GridBagConstraints();
@@ -248,6 +261,96 @@ public class EmitirLicencia extends JDialog{
 				str = str.substring(0, str.length()-1);
 				System.out.println(str);
 				
+				if(costocalculado==0)
+				{
+					JOptionPane.showMessageDialog(null, "¡Falta calcular el costo!");
+					return;
+				}
+				
+				//Validacion de las clases que pueden tener los titulares
+
+				
+			
+				Date d = new Date();
+				Calendar c = Calendar.getInstance();
+				c.setTime(d);
+			    Integer añoActual = c.get(Calendar.YEAR);
+			    Integer mesActual = c.get(Calendar.MONTH)+1;
+			    Integer diaActual = c.get(Calendar.DAY_OF_MONTH);
+			    Integer añoNacimiento = Integer.parseInt(nuevo_titular.getFecha_nac().split("/")[2]);
+			    Integer mesNacimiento = Integer.parseInt(nuevo_titular.getFecha_nac().split("/")[1]);
+			    Integer diaNacimiento = Integer.parseInt(nuevo_titular.getFecha_nac().split("/")[0]);
+			    
+			   //System.out.println("Dia: "+ diaActual + "Mes: " + mesActual + "Año: "+ añoActual);
+			   //System.out.println("DiaN: "+ diaNacimiento + "MesN: " + mesNacimiento+ "AñoN: "+ añoNacimiento);
+
+			  //Validacion edad para clases C, D y E
+				if(str.contains("C")||str.contains("D")||str.contains("E"))
+				{
+					edad=añoActual-añoNacimiento;
+					if(edad<21)
+					{
+						JOptionPane.showMessageDialog(null, "¡Para otorgar la/s licencia/s C, D o E debe ser mayor a 21 años!");
+						return;
+					}
+					else if(edad==21 && mesActual<mesNacimiento)
+					{
+						JOptionPane.showMessageDialog(null, "¡Para otorgar la/s licencia/s C, D o E debe ser mayor a 21 años!");
+						return;
+					}
+					else if(edad==21 && mesActual==mesNacimiento && diaActual<diaNacimiento)
+					{
+						JOptionPane.showMessageDialog(null, "¡Para otorgar la/s licencia/s C, D o E debe ser mayor a 21 años!");
+						return;
+					}
+					else
+					{
+						LicenciaJSON lj = new LicenciaJSON();
+						Boolean claseB =  lj.titularConAntiguedad(nuevo_titular, "B");
+						if(claseB==false)
+						{
+							JOptionPane.showMessageDialog(null, "¡Para otorgar la/s licencia/s C, D o E debe tener "
+									+ "antiguedad de por lo menos un año con clase B!");
+							return;
+						}
+						
+						if(edad>65)
+						{
+							Boolean claseC = lj.titularConAntiguedad(nuevo_titular, "C");
+							Boolean claseD = lj.titularConAntiguedad(nuevo_titular, "D");
+							Boolean claseE = lj.titularConAntiguedad(nuevo_titular, "E");
+							
+							if(claseC==false && claseD==false && claseE==false)
+							{
+								JOptionPane.showMessageDialog(null, "¡No se puede otorgar la/s licencia/s C, D o E a "
+										+ "personas de más de 65 años por primera vez!");
+								return;
+							}
+						}
+						
+					}
+				}
+				else
+				{
+					edad=añoActual-añoNacimiento;
+					if(edad<17)
+					{
+						JOptionPane.showMessageDialog(null, "¡Para otorgar la/s licencia/s A, B, F o G debe ser mayor a 17 años!");
+						return;
+					}
+					else if(edad==17 && mesActual<mesNacimiento)
+					{
+						JOptionPane.showMessageDialog(null, "¡Para otorgar la/s licencia/s A, B, F o G debe ser mayor a 17 años!");
+						return;
+					}
+					else if(edad==17 && mesActual==mesNacimiento && diaActual<diaNacimiento)
+					{
+						JOptionPane.showMessageDialog(null, "¡Para otorgar la/s licencia/s A, B, F o G debe ser mayor a 17 años!");
+						return;
+					}
+				}
+				
+
 				nuevo_titular.setClases(str);	
 				nuevo_titular = new TitularJSON().crear(nuevo_titular);
 				nueva_licencia = new LicenciaJSON().crear(nuevo_titular.getId_titular(),nuevo_titular.getClases(),0,nuevo_titular.getFecha_nac(),5,textField.getText());

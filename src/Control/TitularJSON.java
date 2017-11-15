@@ -68,6 +68,14 @@ public class TitularJSON implements ControlImplementation<Titular>{
         return null;
 	}
 	
+	public Titular buscarPorDni(Integer dni) {
+		ArrayList<Titular> Entry = listarEnLista();
+        for(Titular i: Entry)
+            if(i.getDNI()==dni)
+                return i;
+        return null;
+	}
+	
 	public boolean existeTitular(Titular tit) {
 		ArrayList<Titular> Entry = listarEnLista();
         for(Titular i: Entry)

@@ -51,6 +51,10 @@ public class MenuPrincipal extends JFrame {
 		getContentPane().add(lblBienvenido);
 		
 		JButton inicio = new JButton(" INICIO ");
+		inicio.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+			}
+		});
 		inicio.setFont(new Font("Times New Roman", Font.BOLD, 18));
 		inicio.setBounds(1140, 34, 172, 57);
 		getContentPane().add(inicio);
@@ -107,7 +111,24 @@ public class MenuPrincipal extends JFrame {
 		lblNewLabel.setFont(new Font("Perpetua", Font.BOLD, 25));
 		lblNewLabel.setBounds(844, 588, 259, 37);
 		getContentPane().add(lblNewLabel);
+		
+		JButton btnListadoDeLicencias = new JButton("Listado de Licencias");
+		btnListadoDeLicencias.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				ListadosDeLicencias listadoDeLicencias = new ListadosDeLicencias(MenuPrincipal.this);
+				listadoDeLicencias.setVisible(true);
+				
+			}
+		});
+		btnListadoDeLicencias.setFont(new Font("Times New Roman", Font.BOLD, 16));
+		btnListadoDeLicencias.setBounds(1140, 118, 175, 57);
+		getContentPane().add(btnListadoDeLicencias);
 		setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
+		inicio.addMouseListener(new MouseAdapter() {
+			public void mouseClicked(MouseEvent arg0) {
+				
+			}
+		});
 	}
 	
 	public static void main(String[] args) {
