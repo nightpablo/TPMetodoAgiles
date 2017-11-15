@@ -21,11 +21,14 @@ import net.sf.jasperreports.engine.JasperPrint;
 import net.sf.jasperreports.engine.JasperReport;
 import net.sf.jasperreports.engine.export.JRPdfExporter;
 import net.sf.jasperreports.engine.util.JRLoader;
+import net.sf.jasperreports.swing.JRViewer;
 
 import javax.swing.JButton;
+import javax.swing.JCheckBox;
 import javax.swing.JPanel;
 
 import javax.swing.border.TitledBorder;
+import javax.swing.event.TableModelListener;
 import javax.swing.JDialog;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
@@ -37,11 +40,10 @@ import javax.swing.JTextField;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
+import java.io.File;
 import java.io.IOException;
-import java.util.Calendar;
-import java.util.Date;
+import java.util.HashMap;
 import java.awt.event.ActionEvent;
-import java.awt.Checkbox;
 import java.awt.Dimension;
 
 @SuppressWarnings("serial")
@@ -50,35 +52,24 @@ public class EmitirLicencia extends JDialog{
 	private JTable table;
 	private JTextField textField;
 	private Integer vigenciacalculada;
-	private Integer costocalculado;
+	private Integer costo_calculado;
 	private boolean se_emitio;
 	private Titular nuevo_titular;
 	private Licencia nueva_licencia;
-	private Integer fecha_nacimiento;
-	private Integer edad;
-	private Checkbox a;
-	private Checkbox b;
-	private Checkbox c;
-	private Checkbox d;
-	private Checkbox e;
-	private Checkbox f;
-	private Checkbox g; 
+	private boolean se_toco_clases;
+	private boolean se_genero_comprobante;
+	
 	
 	public EmitirLicencia(JFrame principal, Titular titularentrada, boolean[] claseselegidas) {
 		super(principal);
 		nuevo_titular = titularentrada;
 		vigenciacalculada=0;
-		costocalculado=0;
 		se_emitio = false;
+		se_toco_clases = true;
+		se_genero_comprobante = false;
 		setTitle("Emision de licencia");
-		a = new Checkbox();
-		b = new Checkbox();
-		c = new Checkbox();
-		d = new Checkbox();
-		e = new Checkbox();
-		f = new Checkbox();
-		g = new Checkbox();
-			
+	
+		
 		DefaultTableModel  model = new  DefaultTableModel() {
 			@Override
 			public Class<?> getColumnClass(int column) {
@@ -89,17 +80,22 @@ public class EmitirLicencia extends JDialog{
 						return String.class;
 					case 2:
 						return Boolean.class;
-					
 					default: 
 						return String.class;
 				}
 			}
+			@Override
+			public boolean isCellEditable(int row, int column) {
+				if(se_emitio)
+					return false;
+				return super.isCellEditable(row, column);
+			}
 		
 		};
 		GridBagLayout gridBagLayout = new GridBagLayout();
-		gridBagLayout.columnWidths = new int[]{20, 100, 500, 500, 100, 20, 0};
+		gridBagLayout.columnWidths = new int[]{20, 100, 500, 417, 209, 100, 0, 0};
 		gridBagLayout.rowHeights = new int[]{20, 0, 238, 63, 0, 44, 0};
-		gridBagLayout.columnWeights = new double[]{0.0, 0.0, 0.0, 0.0, 0.0, 0.0, Double.MIN_VALUE};
+		gridBagLayout.columnWeights = new double[]{0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, Double.MIN_VALUE};
 		gridBagLayout.rowWeights = new double[]{0.0, 0.0, 0.0, 0.0, 0.0, 0.0, Double.MIN_VALUE};
 		getContentPane().setLayout(gridBagLayout);
 		
@@ -123,14 +119,17 @@ public class EmitirLicencia extends JDialog{
 		panel_2.setLayout(null);
 		GridBagConstraints gbc_panel_2 = new GridBagConstraints();
 		gbc_panel_2.fill = GridBagConstraints.BOTH;
-		gbc_panel_2.gridwidth = 4;
+		gbc_panel_2.gridwidth = 5;
 		gbc_panel_2.insets = new Insets(0, 0, 5, 5);
 		gbc_panel_2.gridx = 1;
 		gbc_panel_2.gridy = 2;
 		getContentPane().add(panel_2, gbc_panel_2);
 		
+		
+		
+		
 		JScrollPane scrollPane = new JScrollPane();
-		scrollPane.setBounds(0, 0, 1250, 233);
+		scrollPane.setBounds(0, 0, 1437, 233);
 		panel_2.add(scrollPane);
 		scrollPane.setAutoscrolls(true);
 		
@@ -138,6 +137,21 @@ public class EmitirLicencia extends JDialog{
 		scrollPane.setViewportView(table);
 		
 		table.setModel(model);
+		table.addMouseListener(new MouseListener() {
+			@Override
+			public void mouseReleased(MouseEvent e) {}
+			@Override
+			public void mousePressed(MouseEvent e) {}
+			@Override
+			public void mouseExited(MouseEvent e) {}
+			@Override
+			public void mouseEntered(MouseEvent e) {}
+			@Override
+			public void mouseClicked(MouseEvent e) {
+		        int col = table.columnAtPoint(e.getPoint());
+		        if(col==2) se_toco_clases = true;
+			}
+		});
 		
 		JPanel panel = new JPanel();
 		panel.setFont(new Font("Tahoma", Font.PLAIN, 15));
@@ -160,7 +174,7 @@ public class EmitirLicencia extends JDialog{
 		gbc_btnCalcularVigencia.gridy = 0;
 		panel.add(btnCalcularVigencia, gbc_btnCalcularVigencia);
 		
-		JLabel lblNewLabel = new JLabel(" value ");
+		JLabel lblNewLabel = new JLabel("Example 5 a\u00F1os");
 		lblNewLabel.setFont(new Font("Tahoma", Font.PLAIN, 18));
 		GridBagConstraints gbc_lblNewLabel = new GridBagConstraints();
 		gbc_lblNewLabel.anchor = GridBagConstraints.WEST;
@@ -173,7 +187,7 @@ public class EmitirLicencia extends JDialog{
 		gbc_panel.gridx = 2;
 		gbc_panel.gridy = 3;
 		getContentPane().add(panel, gbc_panel);
-		//Funcionalidad de CALULAR VIGENCIA
+		
 		btnCalcularVigencia.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				vigenciacalculada = new TitularJSON().calcularVigencia(nuevo_titular);
@@ -193,12 +207,6 @@ public class EmitirLicencia extends JDialog{
 		panel_1.setLayout(gbl_panel_1);
 		
 		JButton btnCalcularCosto = new JButton("Calcular Costo");
-		btnCalcularCosto.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent arg0) {
-				
-				costocalculado=1;
-			}
-		});
 		btnCalcularCosto.setPreferredSize(new Dimension(200, 40));
 		btnCalcularCosto.setFont(new Font("Arial", Font.PLAIN, 18));
 		GridBagConstraints gbc_btnCalcularCosto = new GridBagConstraints();
@@ -206,9 +214,31 @@ public class EmitirLicencia extends JDialog{
 		gbc_btnCalcularCosto.insets = new Insets(0, 0, 0, 5);
 		gbc_btnCalcularCosto.gridx = 1;
 		gbc_btnCalcularCosto.gridy = 0;
+		JLabel lblNewLabel_1 = new JLabel("Example $100");
+		btnCalcularCosto.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				if(vigenciacalculada==0) {
+					JOptionPane.showMessageDialog(null, "¡Falta calcular la vigencia!");
+					return;
+				}
+				se_toco_clases = false;
+				String str = "";
+				str += (boolean)table.getValueAt(0, 2)? "A," : "";
+				str += (boolean)table.getValueAt(1, 2)? "B," : "";
+				str += (boolean)table.getValueAt(2, 2)? "C," : "";
+				str += (boolean)table.getValueAt(3, 2)? "D," : "";
+				str += (boolean)table.getValueAt(4, 2)? "E," : "";
+				str += (boolean)table.getValueAt(5, 2)? "F," : "";
+				str += (boolean)table.getValueAt(6, 2)? "G," : "";
+				str = str.substring(0, str.length()-1);
+				
+				costo_calculado = new TitularJSON().calcularCosto(str,vigenciacalculada);
+				lblNewLabel_1.setText("$ " + costo_calculado );
+			}
+		});
 		panel_1.add(btnCalcularCosto, gbc_btnCalcularCosto);
 		
-		JLabel lblNewLabel_1 = new JLabel("value");
+		
 		lblNewLabel_1.setFont(new Font("Arial", Font.PLAIN, 18));
 		GridBagConstraints gbc_lblNewLabel_1 = new GridBagConstraints();
 		gbc_lblNewLabel_1.anchor = GridBagConstraints.WEST;
@@ -221,26 +251,6 @@ public class EmitirLicencia extends JDialog{
 		gbc_panel_1.gridx = 3;
 		gbc_panel_1.gridy = 3;
 		getContentPane().add(panel_1, gbc_panel_1);
-		// FUNCIONALIDAD DE CALCULAR COSTO
-		btnCalcularCosto.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent arg0) {
-				//Esto no funciona ya q las clases siempre son B,F y las setea despues!!
-				//costoCalculado = new TitularJSON().calcularCosto(nuevo_titular, vigenciacalculada);
-				se_toco_clases = false;
-				String str = "";
-				str += (boolean)table.getValueAt(0, 2)? "A," : "";
-				str += (boolean)table.getValueAt(1, 2)? "B," : "";
-				str += (boolean)table.getValueAt(2, 2)? "C," : "";
-				str += (boolean)table.getValueAt(3, 2)? "D," : "";
-				str += (boolean)table.getValueAt(4, 2)? "E," : "";
-				str += (boolean)table.getValueAt(5, 2)? "F," : "";
-				str += (boolean)table.getValueAt(6, 2)? "G," : "";
-				str = str.substring(0, str.length()-1);
-				
-				costoCalculado = new TitularJSON().calcularCosto(str, vigenciacalculada);
-				lblNewLabel_1.setText("$" + costoCalculado );
-			}
-		});
 		
 		JLabel lblObservaciones = new JLabel("Observaciones:");
 		lblObservaciones.setFont(new Font("Arial", Font.PLAIN, 18));
@@ -276,7 +286,7 @@ public class EmitirLicencia extends JDialog{
 					return;
 				}
 				if(vigenciacalculada==0) {
-					JOptionPane.showMessageDialog(null, "¡Falta calcular la VIGENCIA!");
+					JOptionPane.showMessageDialog(null, "¡Falta calcular la vigencia!");
 					return;
 				}
 				if(se_toco_clases) {
@@ -293,107 +303,20 @@ public class EmitirLicencia extends JDialog{
 				str += (boolean)table.getValueAt(6, 2)? "G," : "";
 				str = str.substring(0, str.length()-1);
 				
-				if(costocalculado==0)
-				{
-					JOptionPane.showMessageDialog(null, "¡Falta calcular el costo!");
-					return;
-				}
 				
-				//Validacion de las clases que pueden tener los titulares
-
-				
-			
-				Date d = new Date();
-				Calendar c = Calendar.getInstance();
-				c.setTime(d);
-			    Integer añoActual = c.get(Calendar.YEAR);
-			    Integer mesActual = c.get(Calendar.MONTH)+1;
-			    Integer diaActual = c.get(Calendar.DAY_OF_MONTH);
-			    Integer añoNacimiento = Integer.parseInt(nuevo_titular.getFecha_nac().split("/")[2]);
-			    Integer mesNacimiento = Integer.parseInt(nuevo_titular.getFecha_nac().split("/")[1]);
-			    Integer diaNacimiento = Integer.parseInt(nuevo_titular.getFecha_nac().split("/")[0]);
-			    
-			   //System.out.println("Dia: "+ diaActual + "Mes: " + mesActual + "Año: "+ añoActual);
-			   //System.out.println("DiaN: "+ diaNacimiento + "MesN: " + mesNacimiento+ "AñoN: "+ añoNacimiento);
-
-			  //Validacion edad para clases C, D y E
-			    //LLamar funcion controlarLicenciaProfesional
-				if(str.contains("C")||str.contains("D")||str.contains("E"))
-				{
-					edad=añoActual-añoNacimiento;
-					if(edad<21)
-					{
-						JOptionPane.showMessageDialog(null, "¡Para otorgar la/s licencia/s C, D o E debe ser mayor a 21 años!");
-						return;
-					}
-					else if(edad==21 && mesActual<mesNacimiento)
-					{
-						JOptionPane.showMessageDialog(null, "¡Para otorgar la/s licencia/s C, D o E debe ser mayor a 21 años!");
-						return;
-					}
-					else if(edad==21 && mesActual==mesNacimiento && diaActual<diaNacimiento)
-					{
-						JOptionPane.showMessageDialog(null, "¡Para otorgar la/s licencia/s C, D o E debe ser mayor a 21 años!");
-						return;
-					}
-					else
-					{
-						LicenciaJSON lj = new LicenciaJSON();
-						Boolean claseB =  lj.titularConAntiguedad(nuevo_titular, "B");
-						if(claseB==false)
-						{
-							JOptionPane.showMessageDialog(null, "¡Para otorgar la/s licencia/s C, D o E debe tener "
-									+ "antiguedad de por lo menos un año con clase B!");
-							return;
-						}
-						
-						if(edad>65)
-						{
-							Boolean claseC = lj.titularConAntiguedad(nuevo_titular, "C");
-							Boolean claseD = lj.titularConAntiguedad(nuevo_titular, "D");
-							Boolean claseE = lj.titularConAntiguedad(nuevo_titular, "E");
-							
-							if(claseC==false && claseD==false && claseE==false)
-							{
-								JOptionPane.showMessageDialog(null, "¡No se puede otorgar la/s licencia/s C, D o E a "
-										+ "personas de más de 65 años por primera vez!");
-								return;
-							}
-						}
-						
-					}
-				}
-				else
-				{
-					edad=añoActual-añoNacimiento;
-					if(edad<17)
-					{
-						JOptionPane.showMessageDialog(null, "¡Para otorgar la/s licencia/s A, B, F o G debe ser mayor a 17 años!");
-						return;
-					}
-					else if(edad==17 && mesActual<mesNacimiento)
-					{
-						JOptionPane.showMessageDialog(null, "¡Para otorgar la/s licencia/s A, B, F o G debe ser mayor a 17 años!");
-						return;
-					}
-					else if(edad==17 && mesActual==mesNacimiento && diaActual<diaNacimiento)
-					{
-						JOptionPane.showMessageDialog(null, "¡Para otorgar la/s licencia/s A, B, F o G debe ser mayor a 17 años!");
-						return;
-					}
-				}
-				
-
 				nuevo_titular.setClases(str);	
 				nuevo_titular = new TitularJSON().crear(nuevo_titular);
 				nueva_licencia = new LicenciaJSON().crear(nuevo_titular.getId_titular(),nuevo_titular.getClases(),0,nuevo_titular.getFecha_nac(),5,textField.getText());
 				
-				JOptionPane.showMessageDialog(null, "Se creó un nuevo Titular y se emitió su Licencia");
+				JOptionPane.showMessageDialog(null, "Se creó un nuevo titular y se emitió una licencia");
 				se_emitio = true;
-//				dispose();
+				btnCalcularVigencia.setEnabled(false);
+				btnCalcularCosto.setEnabled(false);
+				btnEmitir.setEnabled(false);
+				textField.setEditable(false);
+				
 			}
 		});
-		
 		btnEmitir.setFont(new Font("Arial", Font.PLAIN, 18));
 		GridBagConstraints gbc_btnEmitir = new GridBagConstraints();
 		gbc_btnEmitir.anchor = GridBagConstraints.EAST;
@@ -419,19 +342,9 @@ public class EmitirLicencia extends JDialog{
 		model.addColumn("Clase");
 		model.addColumn("Descripcion");
 		model.addColumn("");
-		/*for(int i=0;i<7;i++) {
+		for(int i=0;i<7;i++) {
 			model.addRow(new Object [] {"","",claseselegidas[i]});
-		}*/
-		
-		
-		model.addRow(new Object [] {"","",a.getState()});
-		model.addRow(new Object [] {"","",b.getState()});
-		model.addRow(new Object [] {"","",c.getState()});
-		model.addRow(new Object [] {"","",d.getState()});
-		model.addRow(new Object [] {"","",e.getState()});
-		model.addRow(new Object [] {"","",f.getState()});
-		model.addRow(new Object [] {"","",g.getState()});
-		
+		}
 		model.setValueAt("Clase A", 0, 0);
 		model.setValueAt("Ciclomotores motocicleta y triciclo motorizados", 0, 1);
 		model.setValueAt("Clase B", 1, 0);
@@ -452,11 +365,10 @@ public class EmitirLicencia extends JDialog{
 		def.setHorizontalAlignment(JLabel.CENTER);
 		table.getColumnModel().getColumn(0).setCellRenderer(def);
 		
-		table.getColumnModel().getColumn(1).setMaxWidth(1200);
+		table.getColumnModel().getColumn(1).setMaxWidth(1400);
 		table.getColumnModel().getColumn(2).setMaxWidth(30);
 		table.setFont(new Font("Arial", Font.PLAIN, 20));
 		table.setRowHeight(30);
-		
 		
 		JButton btnImprimir = new JButton("Imprimir");
 		btnImprimir.setPreferredSize(new Dimension(110, 40));
@@ -466,20 +378,33 @@ public class EmitirLicencia extends JDialog{
 					JOptionPane.showMessageDialog(null, "¡Se debe emitir la licencia primero!");
 					return;
 				}
+				if(!se_genero_comprobante) {
+					JOptionPane.showMessageDialog(null, "¡Se debe generar el comprobante de pago primero!");
+					return;
+				}
 
 				try {
-					String ubicacion_jasper = "src/Utils/report1.jasper";//Cambiar por el nombre de .jasper
-					String nombre_pdf = "reporte1.pdf";
+					String f = new File("").getCanonicalPath();
+					f = f.replace("\\", "\\"+"\\");
+					f+= "\\"+"\\"+"src"+"\\"+"\\"+"utils"+"\\"+"\\";
+					HashMap<String, Object> parameter = new HashMap<String, Object>();
+					parameter.put("pathFrente",f+"FrenteLicencia.jpg");
+					parameter.put("pathAtras",f+"ParteAtras.jpg");
+					
+					String ubicacion_jasper = "src/Utils/Licenciafrentratras.jasper";//Cambiar por el nombre de .jasper
+					String nombre_pdf = "Licencia "+nuevo_titular.getApellidos()+", "+nuevo_titular.getNombres()+".pdf";
 					
 					Impresion imp = new Impresion();
-					imp.setting(nuevo_titular, nueva_licencia);
+					imp.setting(nuevo_titular, nueva_licencia,costo_calculado);
 					JasperReport report = (JasperReport) JRLoader.loadObjectFromFile(ubicacion_jasper);
-					JasperPrint jasperprint = JasperFillManager.fillReport(report, null, imp);
+					JasperPrint jasperprint = JasperFillManager.fillReport(report, parameter, imp);
 					JRPdfExporter exporter = new JRPdfExporter();  
-			        exporter.setParameter(JRExporterParameter.JASPER_PRINT, jasperprint); 
-			        exporter.setParameter(JRExporterParameter.OUTPUT_FILE, new java.io.File(nombre_pdf)); //Cambiar por el nombre del pdf que se generará
+			        exporter.setParameter(JRExporterParameter.JASPER_PRINT, jasperprint);
+			        String myDocumentPath = System.getProperty("user.home") + "\\Documents";
+			        myDocumentPath = myDocumentPath.replace("\\", "\\"+"\\");
+			        exporter.setParameter(JRExporterParameter.OUTPUT_FILE, new java.io.File(myDocumentPath+"\\"+"\\"+nombre_pdf)); //Cambiar por el nombre del pdf que se generará
 			        exporter.exportReport();
-			        Runtime.getRuntime().exec("rundll32 url.dll,FileProtocolHandler "+nombre_pdf);
+			        Runtime.getRuntime().exec("rundll32 url.dll,FileProtocolHandler "+myDocumentPath+"\\"+"\\"+nombre_pdf);
 				} catch (JRException | IOException e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
@@ -487,10 +412,54 @@ public class EmitirLicencia extends JDialog{
 				
 			}
 		});
+		
+		JButton btnNewButton = new JButton("Generar Comprobante");
+		btnNewButton.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent arg0) {
+				if(!se_emitio) {
+					JOptionPane.showMessageDialog(null, "¡Se debe emitir la licencia primero!");
+					return;
+				}
+				se_genero_comprobante = true;
+				try {
+					String f = new File("").getCanonicalPath();
+					f = f.replace("\\", "\\"+"\\");
+					f+= "\\"+"\\"+"src"+"\\"+"\\"+"utils"+"\\"+"\\"+"generarComprobante.jpg";
+					HashMap<String, Object> parameter = new HashMap<String, Object>();
+					parameter.put("path",f);
+					
+					String ubicacion_jasper = "src/Utils/Generar.jasper";//Cambiar por el nombre de .jasper
+					String nombre_pdf = "Comprobante de Pago - "+nuevo_titular.getApellidos()+", "+nuevo_titular.getNombres()+".pdf";
+					
+					Impresion imp = new Impresion();
+					imp.setting(nuevo_titular, nueva_licencia,costo_calculado);
+					JasperReport report = (JasperReport) JRLoader.loadObjectFromFile(ubicacion_jasper);
+					JasperPrint jasperprint = JasperFillManager.fillReport(report, parameter, imp);
+					JRPdfExporter exporter = new JRPdfExporter();  
+			        exporter.setParameter(JRExporterParameter.JASPER_PRINT, jasperprint); 
+			        String myDocumentPath = System.getProperty("user.home") + "\\Documents";
+			        myDocumentPath = myDocumentPath.replace("\\", "\\"+"\\");
+			        exporter.setParameter(JRExporterParameter.OUTPUT_FILE, new java.io.File(myDocumentPath+"\\"+"\\"+nombre_pdf)); //Cambiar por el nombre del pdf que se generará
+			        exporter.exportReport();
+			        Runtime.getRuntime().exec("rundll32 url.dll,FileProtocolHandler "+myDocumentPath+"\\"+"\\"+nombre_pdf);
+				} catch (JRException | IOException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			}
+		});
+		btnNewButton.setPreferredSize(new Dimension(250, 40));
+		btnNewButton.setFont(new Font("Arial", Font.PLAIN, 18));
+		GridBagConstraints gbc_btnNewButton = new GridBagConstraints();
+		gbc_btnNewButton.insets = new Insets(0, 0, 0, 5);
+		gbc_btnNewButton.gridx = 4;
+		gbc_btnNewButton.gridy = 5;
+		getContentPane().add(btnNewButton, gbc_btnNewButton);
 		btnImprimir.setFont(new Font("Arial", Font.PLAIN, 18));
 		GridBagConstraints gbc_btnImprimir = new GridBagConstraints();
 		gbc_btnImprimir.insets = new Insets(0, 0, 0, 5);
-		gbc_btnImprimir.gridx = 4;
+		gbc_btnImprimir.gridx = 5;
 		gbc_btnImprimir.gridy = 5;
 		getContentPane().add(btnImprimir, gbc_btnImprimir);
 		

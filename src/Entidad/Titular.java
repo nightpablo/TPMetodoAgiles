@@ -144,7 +144,7 @@ public class Titular implements EntityImplementation {
 			nombres = object.getString(TableDatabase.TITULAR.NOMBRES);
 			fecha_nac = object.getString(TableDatabase.TITULAR.FECHA_NAC);
 			direccion = object.getString(TableDatabase.TITULAR.DIRECCION);
-			direccion = object.getString(TableDatabase.TITULAR.LOCALIDAD);
+			localidad = object.getString(TableDatabase.TITULAR.LOCALIDAD);
 			clases = object.getString(TableDatabase.TITULAR.CLASES);
 			grupo = object.getString(TableDatabase.TITULAR.GRUPO); // "AB+" "A" "B" "O"
 			factor = object.getString(TableDatabase.TITULAR.FACTOR);

@@ -1,7 +1,5 @@
 package Control;
 
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
@@ -12,7 +10,6 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import Entidad.Licencia;
 import Entidad.Titular;
 import Utils.HTTPConection;
 import Utils.Implements.ControlImplementation;
@@ -73,14 +70,6 @@ public class TitularJSON implements ControlImplementation<Titular>{
         return null;
 	}
 	
-	public Titular buscarPorDni(Integer dni) {
-		ArrayList<Titular> Entry = listarEnLista();
-        for(Titular i: Entry)
-            if(i.getDNI()==dni)
-                return i;
-        return null;
-	}
-	
 	public boolean existeTitular(Titular tit) {
 		ArrayList<Titular> Entry = listarEnLista();
         for(Titular i: Entry)
@@ -113,20 +102,6 @@ public class TitularJSON implements ControlImplementation<Titular>{
         return salida;
 	}
 
-	public ArrayList<Titular> buscarTitularesConLicenciasExpiradas(ArrayList<Licencia> licenciasExpiradas) {
-        
-		ArrayList<Titular> titularesConLicenciaExpirada = new ArrayList<Titular>();
-        
-		
-		for(Licencia l: licenciasExpiradas)
-		{
-			Titular tE = this.buscarPorId(l.getId_titular());
-			titularesConLicenciaExpirada.add(tE);
-		}
-
-        return titularesConLicenciaExpirada;
-	}
-	
 	public Integer calcularVigencia(Titular t) {
 		Date d = new Date();
 		Calendar c = Calendar.getInstance();
@@ -139,25 +114,17 @@ public class TitularJSON implements ControlImplementation<Titular>{
 		if(diferencia<21) return 1;			//1 año la primera vez y 3 años las siguientes
 		else if(diferencia<=46) return 5;	//5 años
 		else if(diferencia<=60) return 4;	//4 años
-		else if(diferencia<=70) return 3;	//3 años
+		else if(diferencia<=70) return 3;	//2 años
 		return 1;	//1 años
 	}
-	
-	public int calcularCosto(String listaClases, int vigencia) {
-		
+
+	public Integer calcularCosto(String listaClases, Integer vigencia) {
 		int costo= 0;
 		int costo_administrativo= 8;
 		
-		System.out.println("Valor de Vigencia: " + vigencia);
-		if(vigencia == 0) {
-			JOptionPane.showMessageDialog(null, "¡Se debe calcular primero la VIGENCIA!");
-			//return;
-			return 0;
-		}
-	for(String i: listaClases.split(",")) {
+		for(String i: listaClases.split(",")) {
 		switch (i) {
-		//---------------Clase A-----------------------------------------
-				case "A":
+			case "A":
 		       switch (vigencia) {
 		  		case 5:
 		        	costo+= 40;
@@ -178,7 +145,7 @@ public class TitularJSON implements ControlImplementation<Titular>{
 		        case "B":
 		        switch (vigencia) {
 		  		case 5:
-		        		 costo+= 40;
+		  			costo+= 40;
 		       		 break;
 		 		case 4:
 		       		 costo+= 30;
@@ -187,7 +154,7 @@ public class TitularJSON implements ControlImplementation<Titular>{
 		      		costo+= 25;
 		       		 break;
 		  		case 1:
-		      		costo= 20;
+		      		costo+= 20;
 		      		break;
 				}
 		        break;
@@ -259,7 +226,7 @@ public class TitularJSON implements ControlImplementation<Titular>{
 			      		costo+= 25;
 			       		 break;
 			  		case 1:
-			      		costo= 20;
+			      		costo+= 20;
 			      		break;
 					}
 			        break;
@@ -291,5 +258,5 @@ public class TitularJSON implements ControlImplementation<Titular>{
 		}
 	return costo + costo_administrativo;
 	}
-	
+
 }
