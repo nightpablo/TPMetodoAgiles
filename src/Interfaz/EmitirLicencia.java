@@ -45,9 +45,11 @@ public class EmitirLicencia extends JDialog{
 	private JTable table;
 	private JTextField textField;
 	private Integer vigenciacalculada;
+	private Integer costoCalculado;
 	private boolean se_emitio;
 	private Titular nuevo_titular;
 	private Licencia nueva_licencia;
+	private boolean se_toco_clases;
 	
 	public EmitirLicencia(JFrame principal, Titular titularentrada, boolean[] claseselegidas) {
 		super(principal);
@@ -55,7 +57,7 @@ public class EmitirLicencia extends JDialog{
 		vigenciacalculada=0;
 		se_emitio = false;
 		setTitle("Emision de licencia");
-	
+		se_toco_clases = true;
 		
 		DefaultTableModel  model = new  DefaultTableModel() {
 			@Override
@@ -107,9 +109,6 @@ public class EmitirLicencia extends JDialog{
 		gbc_panel_2.gridy = 2;
 		getContentPane().add(panel_2, gbc_panel_2);
 		
-		
-		
-		
 		JScrollPane scrollPane = new JScrollPane();
 		scrollPane.setBounds(0, 0, 1250, 233);
 		panel_2.add(scrollPane);
@@ -141,7 +140,7 @@ public class EmitirLicencia extends JDialog{
 		gbc_btnCalcularVigencia.gridy = 0;
 		panel.add(btnCalcularVigencia, gbc_btnCalcularVigencia);
 		
-		JLabel lblNewLabel = new JLabel("Example 5 a\u00F1os");
+		JLabel lblNewLabel = new JLabel(" value ");
 		lblNewLabel.setFont(new Font("Tahoma", Font.PLAIN, 18));
 		GridBagConstraints gbc_lblNewLabel = new GridBagConstraints();
 		gbc_lblNewLabel.anchor = GridBagConstraints.WEST;
@@ -154,7 +153,7 @@ public class EmitirLicencia extends JDialog{
 		gbc_panel.gridx = 2;
 		gbc_panel.gridy = 3;
 		getContentPane().add(panel, gbc_panel);
-		
+		//Funcionalidad de CALULAR VIGENCIA
 		btnCalcularVigencia.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				vigenciacalculada = new TitularJSON().calcularVigencia(nuevo_titular);
@@ -174,6 +173,7 @@ public class EmitirLicencia extends JDialog{
 		panel_1.setLayout(gbl_panel_1);
 		
 		JButton btnCalcularCosto = new JButton("Calcular Costo");
+		
 		btnCalcularCosto.setPreferredSize(new Dimension(200, 40));
 		btnCalcularCosto.setFont(new Font("Arial", Font.PLAIN, 18));
 		GridBagConstraints gbc_btnCalcularCosto = new GridBagConstraints();
@@ -183,7 +183,7 @@ public class EmitirLicencia extends JDialog{
 		gbc_btnCalcularCosto.gridy = 0;
 		panel_1.add(btnCalcularCosto, gbc_btnCalcularCosto);
 		
-		JLabel lblNewLabel_1 = new JLabel("Example $100");
+		JLabel lblNewLabel_1 = new JLabel("value");
 		lblNewLabel_1.setFont(new Font("Arial", Font.PLAIN, 18));
 		GridBagConstraints gbc_lblNewLabel_1 = new GridBagConstraints();
 		gbc_lblNewLabel_1.anchor = GridBagConstraints.WEST;
@@ -196,6 +196,26 @@ public class EmitirLicencia extends JDialog{
 		gbc_panel_1.gridx = 3;
 		gbc_panel_1.gridy = 3;
 		getContentPane().add(panel_1, gbc_panel_1);
+		// FUNCIONALIDAD DE CALCULAR COSTO
+		btnCalcularCosto.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				//Esto no funciona ya q las clases siempre son B,F y las setea despues!!
+				//costoCalculado = new TitularJSON().calcularCosto(nuevo_titular, vigenciacalculada);
+				se_toco_clases = false;
+				String str = "";
+				str += (boolean)table.getValueAt(0, 2)? "A," : "";
+				str += (boolean)table.getValueAt(1, 2)? "B," : "";
+				str += (boolean)table.getValueAt(2, 2)? "C," : "";
+				str += (boolean)table.getValueAt(3, 2)? "D," : "";
+				str += (boolean)table.getValueAt(4, 2)? "E," : "";
+				str += (boolean)table.getValueAt(5, 2)? "F," : "";
+				str += (boolean)table.getValueAt(6, 2)? "G," : "";
+				str = str.substring(0, str.length()-1);
+				
+				costoCalculado = new TitularJSON().calcularCosto(str, vigenciacalculada);
+				lblNewLabel_1.setText("$" + costoCalculado );
+			}
+		});
 		
 		JLabel lblObservaciones = new JLabel("Observaciones:");
 		lblObservaciones.setFont(new Font("Arial", Font.PLAIN, 18));
@@ -231,28 +251,28 @@ public class EmitirLicencia extends JDialog{
 					return;
 				}
 				if(vigenciacalculada==0) {
-					JOptionPane.showMessageDialog(null, "¡Falta calcular la vigencia!");
+					JOptionPane.showMessageDialog(null, "¡Falta calcular la VIGENCIA!");
+					return;
+				}
+				if(se_toco_clases) {
+					JOptionPane.showMessageDialog(null, "¡Falta calcular el COSTO!");
 					return;
 				}
 				String str = "";
 				str += (boolean)table.getValueAt(0, 2)? "A," : "";
-				System.out.println(str);
 				str += (boolean)table.getValueAt(1, 2)? "B," : "";
-				System.out.println(str);
 				str += (boolean)table.getValueAt(2, 2)? "C," : "";
 				str += (boolean)table.getValueAt(3, 2)? "D," : "";
 				str += (boolean)table.getValueAt(4, 2)? "E," : "";
 				str += (boolean)table.getValueAt(5, 2)? "F," : "";
 				str += (boolean)table.getValueAt(6, 2)? "G," : "";
-				System.out.println(str);
 				str = str.substring(0, str.length()-1);
-				System.out.println(str);
 				
 				nuevo_titular.setClases(str);	
 				nuevo_titular = new TitularJSON().crear(nuevo_titular);
 				nueva_licencia = new LicenciaJSON().crear(nuevo_titular.getId_titular(),nuevo_titular.getClases(),0,nuevo_titular.getFecha_nac(),5,textField.getText());
 				
-				JOptionPane.showMessageDialog(null, "Se creó un nuevo titular y se emitió una licencia");
+				JOptionPane.showMessageDialog(null, "Se creó un nuevo Titular y se emitió su Licencia");
 				se_emitio = true;
 //				dispose();
 			}

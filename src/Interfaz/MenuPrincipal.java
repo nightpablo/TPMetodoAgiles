@@ -74,7 +74,7 @@ public class MenuPrincipal extends JFrame {
 				
 			}
 		});
-		btnImg.setBounds(30, 34, 222, 193);
+		btnImg.setBounds(30, 34, 222, 153);
 		getContentPane().add(btnImg);
 		
 		JSeparator separator = new JSeparator();
@@ -100,13 +100,14 @@ public class MenuPrincipal extends JFrame {
 		
 		JLabel lblSelicence = new JLabel("Selicence");
 		lblSelicence.setFont(new Font("Viner Hand ITC", Font.BOLD, 75));
-		lblSelicence.setBounds(845, 518, 413, 86);
+		lblSelicence.setBounds(953, 519, 357, 86);
 		getContentPane().add(lblSelicence);
 		
-		JLabel lblNewLabel = new JLabel("Aprendiendo Juntos...");
-		lblNewLabel.setFont(new Font("Perpetua", Font.BOLD, 25));
-		lblNewLabel.setBounds(844, 588, 259, 37);
-		getContentPane().add(lblNewLabel);
+		JLabel lblListadoDeLicencias = new JLabel("Listado de  Licencias");
+		lblListadoDeLicencias.setForeground(SystemColor.textHighlight);
+		lblListadoDeLicencias.setFont(new Font("Arial", Font.BOLD | Font.ITALIC, 20));
+		lblListadoDeLicencias.setBounds(40, 191, 222, 14);
+		getContentPane().add(lblListadoDeLicencias);
 		setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
 	}
 	
