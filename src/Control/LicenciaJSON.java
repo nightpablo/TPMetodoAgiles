@@ -87,4 +87,100 @@ public class LicenciaJSON implements ControlImplementation<Licencia>{
 
         return salida;
 	}
+	
+	public ArrayList<Licencia> buscarLicenciasExpiradas() 
+	{
+		Date d = new Date();
+		Calendar c = Calendar.getInstance();
+		c.setTime(d);
+	    Integer anioActual = c.get(Calendar.YEAR);
+	    Integer mesActual = c.get(Calendar.MONTH)+1;
+	    Integer diaActual = c.get(Calendar.DAY_OF_MONTH);
+	    
+	    ArrayList<Licencia> licenciasExpiradas =  new  ArrayList<Licencia>();
+		ArrayList<Licencia> Entry = listarEnLista();
+        
+		
+		for(Licencia l: Entry)
+        {
+        	Integer aVigencia = Integer.parseInt(l.getFin_vigencia().split("/")[2]);
+    	    Integer mVigencia = Integer.parseInt(l.getFin_vigencia().split("/")[1]);
+    	    Integer dVigencia = Integer.parseInt(l.getFin_vigencia().split("/")[0]);
+    	    aVigencia-=anioActual;
+    	    mVigencia-=mesActual;
+    	    dVigencia-=diaActual;
+    	    if(aVigencia<0)
+    	    {
+    	    	licenciasExpiradas.add(l);
+    	    }
+    	    else if(aVigencia==0)
+    	    {
+    	    	if(mVigencia<0)
+    	    	{
+    	    		licenciasExpiradas.add(l);
+    	    	}
+    	    	else if(mVigencia==0)
+    	    	{
+    	    		if(dVigencia<0)
+    	    		{
+    	    			licenciasExpiradas.add(l);
+    	    		}
+    	    	}
+    	    }
+    	 
+        }
+        return licenciasExpiradas;
+	}
+	
+	
+	public Boolean titularConAntiguedad(Titular t, String clase)
+	{
+		ArrayList <Licencia> licencias= listarEnLista();
+		
+		for(Licencia l: licencias)
+		{
+			if(l.getId_titular()==t.getId_titular())
+			{
+				if(l.getClases().contains(clase))
+				{
+					Integer añoEmision = Integer.parseInt(l.getFecha_emision().split("/")[2]);
+					Integer mesEmision = Integer.parseInt(l.getFecha_emision().split("/")[1]);
+				    Integer diaEmision = Integer.parseInt(l.getFecha_emision().split("/")[0]);
+					Date d = new Date();
+					Calendar c = Calendar.getInstance();
+					c.setTime(d);
+				    Integer añoActual = c.get(Calendar.YEAR);
+				    Integer mesActual = c.get(Calendar.MONTH)+1;
+				    Integer diaActual = c.get(Calendar.DAY_OF_MONTH);
+				    
+				    if(añoActual<añoEmision)
+				    	return false;
+				    else if(añoActual==añoEmision && mesActual<mesEmision)
+				    	return false;
+				    else if(añoActual==añoEmision && mesActual==mesEmision && diaActual<diaEmision)
+				    	return false;
+				    else
+				    	return true;
+				    	
+				}
+			}
+		}
+			
+		return false;
+		
+	}
+	
+	public ArrayList<Titular> buscarTitularesConLicenciasExpiradas(ArrayList<Licencia> licenciasExpiradas) {
+        
+		ArrayList<Titular> titularesConLicenciaExpirada = new ArrayList<Titular>();
+        
+		TitularJSON tj = new TitularJSON();
+		for(Licencia l: licenciasExpiradas)
+		{
+			Titular tE = tj.buscarPorId(l.getId_titular());
+			titularesConLicenciaExpirada.add(tE);
+		}
+
+        return titularesConLicenciaExpirada;
+	}
 }

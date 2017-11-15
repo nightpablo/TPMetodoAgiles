@@ -105,13 +105,9 @@ public class ListadosDeLicencias extends JDialog{
 		btnBuscar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				LicenciaJSON lj = new LicenciaJSON();
-//				licenciasExpiradas = lj.buscarLicenciasExpiradas();
+				licenciasExpiradas = lj.buscarLicenciasExpiradas();
+				titularesLicenciasExpiradas = lj.buscarTitularesConLicenciasExpiradas(licenciasExpiradas);
 				
-				TitularJSON tj = new TitularJSON();
-//				titularesLicenciasExpiradas = tj.buscarTitularesConLicenciasExpiradas(licenciasExpiradas);
-				
-				System.out.println(licenciasExpiradas.isEmpty());
-				System.out.println("Size licencias expiradas: "+licenciasExpiradas.size());
 
 			
 				for(int i=0; i<licenciasExpiradas.size(); i++)

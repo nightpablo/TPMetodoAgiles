@@ -71,7 +71,8 @@ private void Home() {
 		btnImg.setFont(new Font("Arial", Font.PLAIN, 14));
 		btnImg.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				
+				ListadosDeLicencias ll = new ListadosDeLicencias(MenuPrincipal.this);
+				ll.setVisible(true);
 			}
 		});
 		btnImg.setBounds(30, 34, 222, 153);

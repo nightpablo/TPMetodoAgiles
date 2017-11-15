@@ -114,7 +114,7 @@ public class TitularJSON implements ControlImplementation<Titular>{
 		if(diferencia<21) return 1;			//1 año la primera vez y 3 años las siguientes
 		else if(diferencia<=46) return 5;	//5 años
 		else if(diferencia<=60) return 4;	//4 años
-		else if(diferencia<=70) return 3;	//2 años
+		else if(diferencia<=70) return 3;	//3 años
 		return 1;	//1 años
 	}
 
