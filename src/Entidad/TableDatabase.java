@@ -28,5 +28,10 @@ public class TableDatabase {
 		static final String CLASES = "clases";
 		static final String OBSERVACIONES = "observaciones";
 	}
+	
+	static class CONTRIBUYENTE{
+		static final String ID_CONSTRIBUYENTE = "id";
+		static final String DNI = "dni";
+	}
 
 }

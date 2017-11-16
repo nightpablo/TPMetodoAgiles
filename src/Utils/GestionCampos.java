@@ -1,7 +1,5 @@
 package Utils;
 
-import javax.swing.JTextField;
-
 public class GestionCampos {
 
 	public GestionCampos() {}

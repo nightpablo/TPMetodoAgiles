@@ -25,6 +25,21 @@ public class Titular implements EntityImplementation {
 	public Titular() {
 
 	}
+	
+	public Titular(String tipo_dni, Integer dni, String apellidos, String nombres, String fecha_nac, String direccion, String localidad, String clases, String grupo, String factor, boolean donante, String fecha_alta_titular) {
+		this.tipo_dni = tipo_dni;
+		this.dni = dni;
+		this.apellidos = apellidos;
+		this.nombres = nombres;
+		this.fecha_nac = fecha_nac;
+		this.direccion = direccion;
+		this.localidad = localidad;
+		this.clases = clases;
+		this.grupo = grupo;
+		this.factor = factor;
+		this.donante = donante;
+		this.fecha_alta_titular = fecha_alta_titular;
+	}
 
 	public Titular(JSONObject jsonObject) {
 		toEntity(jsonObject);

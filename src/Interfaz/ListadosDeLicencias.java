@@ -10,35 +10,18 @@ import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
 
 import Control.LicenciaJSON;
-import Control.TitularJSON;
 import Entidad.Licencia;
 import Entidad.Titular;
-import Utils.Impresion;
-import net.sf.jasperreports.engine.JRException;
-import net.sf.jasperreports.engine.JRExporterParameter;
-import net.sf.jasperreports.engine.JasperFillManager;
-import net.sf.jasperreports.engine.JasperPrint;
-import net.sf.jasperreports.engine.JasperReport;
-import net.sf.jasperreports.engine.export.JRPdfExporter;
-import net.sf.jasperreports.engine.util.JRLoader;
-
 import javax.swing.JButton;
 import javax.swing.JPanel;
 
-import javax.swing.border.TitledBorder;
 import javax.swing.JDialog;
 import javax.swing.JLabel;
-import javax.swing.JOptionPane;
-
 import java.awt.GridBagLayout;
 import java.awt.GridBagConstraints;
 import java.awt.Insets;
-import javax.swing.JTextField;
 import java.awt.event.ActionListener;
-import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.Date;
 import java.awt.event.ActionEvent;
 import java.awt.Dimension;
 
@@ -120,7 +103,7 @@ public class ListadosDeLicencias extends JDialog{
 						model.setValueAt(licenciasExpiradas.get(i).getClases(), i, 3);
 						model.setValueAt(licenciasExpiradas.get(i).getFecha_emision(), i, 4);
 						model.setValueAt(licenciasExpiradas.get(i).getFin_vigencia(), i, 5);
-		        }
+		       }
 			}
 		});
 		GridBagConstraints gbc_btnBuscar = new GridBagConstraints();

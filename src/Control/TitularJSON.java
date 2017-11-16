@@ -4,12 +4,11 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 
-import javax.swing.JOptionPane;
-
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import Entidad.Contribuyente;
 import Entidad.Titular;
 import Utils.HTTPConection;
 import Utils.Implements.ControlImplementation;
@@ -82,6 +81,14 @@ public class TitularJSON implements ControlImplementation<Titular>{
 		ArrayList<Titular> Entry = listarEnLista();
         for(Titular i: Entry)
             if(i.getDNI().equals(DNI))
+                return true;
+        return false;
+	}
+	
+	public boolean perteneceListaContribuyente(Integer DNI) {
+		ArrayList<Contribuyente> Entry = new ContribuyenteJSON().listarEnLista();
+		for(Contribuyente i: Entry) 
+			if(i.getDni().equals(DNI))
                 return true;
         return false;
 	}

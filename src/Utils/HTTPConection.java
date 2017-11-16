@@ -11,6 +11,8 @@ import java.net.MalformedURLException;
 import java.net.ProtocolException;
 import java.net.URL;
 
+import javax.swing.JOptionPane;
+
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -94,6 +96,7 @@ public class HTTPConection {
             e.printStackTrace();
         } catch (IOException e) {
             e.printStackTrace();
+            JOptionPane.showMessageDialog(null, "Base de Datos fallada o inactiva");
         } catch (JSONException e) {
             e.printStackTrace();
         } finally {

@@ -10,9 +10,7 @@ public class Licencia implements EntityImplementation{
 	public static final Object NOMBRE_TABLA = "licencias";
 	private Integer id_licencia;
 	private Integer id_titular;
-	//SACAR FECHA DE EMISION
 	private String fecha_emision;
-	private String inicio_vigencia;
 	private String fin_vigencia;
 	private Integer usuario;
 	private String observaciones;
@@ -20,6 +18,14 @@ public class Licencia implements EntityImplementation{
 	
 	public Licencia() {
 
+	}
+	public Licencia(Integer id_titular, String fecha_emision, String fin_vigencia, Integer usuario, String observaciones, String clases) {
+		this.id_titular = id_titular;
+		this.fecha_emision = fecha_emision;
+		this.fin_vigencia = fin_vigencia;
+		this.usuario = usuario;
+		this.observaciones = observaciones;
+		this.clases = clases;
 	}
 	
 	public Licencia(JSONObject jsonObject) {
@@ -40,14 +46,6 @@ public class Licencia implements EntityImplementation{
 
 	public void setId_titular(Integer id_titular) {
 		this.id_titular = id_titular;
-	}
-
-	public String getInicio_vigencia() {
-		return inicio_vigencia;
-	}
-
-	public void setInicio_vigencia(String inicio_vigencia) {
-		this.inicio_vigencia = inicio_vigencia;
 	}
 
 	public String getFin_vigencia() {
@@ -95,7 +93,6 @@ public class Licencia implements EntityImplementation{
 		try {
 			id_licencia = object.getInt(TableDatabase.LICENCIA.ID_LICENCIA);
 			id_titular = object.getInt(TableDatabase.LICENCIA.ID_TITULAR);
-			inicio_vigencia = object.getString(TableDatabase.LICENCIA.INICIO_VIGENCIA);
 			fecha_emision = object.getString(TableDatabase.LICENCIA.FECHA_EMISION);
 			fin_vigencia = object.getString(TableDatabase.LICENCIA.FIN_VIGENCIA);
 			usuario = object.getInt(TableDatabase.LICENCIA.USUARIO);
@@ -115,7 +112,6 @@ public class Licencia implements EntityImplementation{
 		try {
 			jsonObject.put(TableDatabase.LICENCIA.ID_LICENCIA, id_licencia);
 			jsonObject.put(TableDatabase.LICENCIA.ID_TITULAR, id_titular);
-			jsonObject.put(TableDatabase.LICENCIA.INICIO_VIGENCIA, inicio_vigencia);
 			jsonObject.put(TableDatabase.LICENCIA.FECHA_EMISION, fecha_emision);
 			jsonObject.put(TableDatabase.LICENCIA.FIN_VIGENCIA, fin_vigencia);
 			jsonObject.put(TableDatabase.LICENCIA.USUARIO, usuario);

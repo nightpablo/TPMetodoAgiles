@@ -17,9 +17,7 @@ public class LicenciaJSON implements ControlImplementation<Licencia>{
 
 	
 	
-	public LicenciaJSON() {
-		// TODO Auto-generated constructor stub
-	}
+	public LicenciaJSON() {}
 
 	@Override
 	public Licencia crear(Licencia entrada) {
@@ -27,7 +25,7 @@ public class LicenciaJSON implements ControlImplementation<Licencia>{
 		return null;
 	}
 	
-	public Licencia crear(Integer id_titular, String clases, Integer usuario, String fecha_nacimiento, Integer cantidadaño, String observaciones) {
+	public Licencia crear(Integer id_titular, String clases, Integer usuario, Integer cantidadaño, String observaciones) {
 		Licencia nuevo = new Licencia();
 		nuevo.setId_titular(id_titular);
 		nuevo.setClases(clases);
@@ -42,10 +40,8 @@ public class LicenciaJSON implements ControlImplementation<Licencia>{
 	    
 	    nuevo.setFecha_emision(dd+"/"+mm+"/"+aaaa);
 	    
-	    String[] ss = fecha_nacimiento.split("/");
-	    nuevo.setInicio_vigencia(ss[0]+"/"+ss[1]+"/"+aaaa);
-	    Integer año = Integer.parseInt(aaaa)+cantidadaño;
-	    nuevo.setFin_vigencia(ss[0]+"/"+ss[1]+"/"+año);
+	    Integer año_fin_vigencia = Integer.parseInt(aaaa)+cantidadaño;
+	    nuevo.setFin_vigencia(dd+"/"+mm+"/"+año_fin_vigencia);
 	    nuevo.setObservaciones(observaciones);
 	    
 		crear(nuevo);
@@ -56,19 +52,19 @@ public class LicenciaJSON implements ControlImplementation<Licencia>{
 
 	@Override
 	public void modificar(Licencia entrada) {
-//		new HTTPConection().gestion(new Object[] {Licencia.NOMBRE_TABLA,"PUT",entrada.toJSON(),entrada.getId_titular()});
+		new HTTPConection().gestion(new Object[] {Licencia.NOMBRE_TABLA,"PUT",entrada.toJSON(),entrada.getId_licencia()});
 	}
 
 	@Override
 	public void borrar(Licencia entrada) {
-//		new HTTPConection().gestion(new Object[] {Licencia.NOMBRE_TABLA,"DELETE",entrada.getId_titular()});		
+		new HTTPConection().gestion(new Object[] {Licencia.NOMBRE_TABLA,"DELETE",entrada.getId_licencia()});		
 	}
 	@Override
 	public Licencia buscarPorId(Integer id) {
 		ArrayList<Licencia> Entry = listarEnLista();
-//        for(Titular i: Entry)
-//            if(i.getId_titular()==id)
-//                return i;
+        for(Licencia i: Entry)
+            if(i.getId_licencia()==id)
+                return i;
         return null;
 	}
 

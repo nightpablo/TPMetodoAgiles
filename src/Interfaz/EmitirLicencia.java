@@ -21,14 +21,10 @@ import net.sf.jasperreports.engine.JasperPrint;
 import net.sf.jasperreports.engine.JasperReport;
 import net.sf.jasperreports.engine.export.JRPdfExporter;
 import net.sf.jasperreports.engine.util.JRLoader;
-import net.sf.jasperreports.swing.JRViewer;
-
 import javax.swing.JButton;
-import javax.swing.JCheckBox;
 import javax.swing.JPanel;
 
 import javax.swing.border.TitledBorder;
-import javax.swing.event.TableModelListener;
 import javax.swing.JDialog;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
@@ -46,7 +42,7 @@ import java.util.HashMap;
 import java.awt.event.ActionEvent;
 import java.awt.Dimension;
 
-@SuppressWarnings("serial")
+@SuppressWarnings({ "serial", "deprecation" })
 public class EmitirLicencia extends JDialog{
 
 	private JTable table;
@@ -306,7 +302,7 @@ public class EmitirLicencia extends JDialog{
 				
 				nuevo_titular.setClases(str);	
 				nuevo_titular = new TitularJSON().crear(nuevo_titular);
-				nueva_licencia = new LicenciaJSON().crear(nuevo_titular.getId_titular(),nuevo_titular.getClases(),0,nuevo_titular.getFecha_nac(),5,textField.getText());
+				nueva_licencia = new LicenciaJSON().crear(nuevo_titular.getId_titular(),nuevo_titular.getClases(),0,5,textField.getText());
 				
 				JOptionPane.showMessageDialog(null, "Se creó un nuevo titular y se emitió una licencia");
 				se_emitio = true;
