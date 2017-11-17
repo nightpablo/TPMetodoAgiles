@@ -144,6 +144,29 @@ public class VariasPruebas {
 		
 	}
 	
+	@Test
+	public void pruebaDeTitularNormalProfesional() {
+		TitularJSON tj = new TitularJSON();
+		//Inicio de test donde es verdadera
+		assertTrue(tj.edadSuficiente(11, 11, 1999, "A,B"));
+		assertTrue(tj.edadSuficiente(11, 11, 1996, "A,C"));
+		
+		
+		assertFalse(tj.edadSuficiente(1, 11, 2000, "A,B"));
+		assertFalse(tj.edadSuficiente(31, 11, 1999, "A,B"));
+		assertFalse(tj.edadSuficiente(1, 12, 1999, "A,B"));
+		
+		assertFalse(tj.edadSuficiente(1, 11, 1997, "A,C"));
+		assertFalse(tj.edadSuficiente(31, 11, 1996, "A,C"));
+		assertFalse(tj.edadSuficiente(1, 12, 1996, "A,C"));
+		
+		assertFalse(tj.edadSuficiente(1, 11, 1997, "A,E,F,G"));
+		assertFalse(tj.edadSuficiente(31, 11, 1996, "A,C,G"));
+		assertFalse(tj.edadSuficiente(1, 12, 1996, "A,D,F"));
+		
+		
+	}
+	
 	
 	
 	

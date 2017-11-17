@@ -291,7 +291,7 @@ public class TitularJSON implements ControlImplementation<Titular>{
 	    if(aaaa-año>edad_permitido)
 	    	return true;
 	    if(aaaa-año==edad_permitido)
-	    	if(mm-mes<0)
+	    	if(mm-mes>0)
 	    		return true;
 	    	else if(mm-mes==0)
 	    		if(dd-dia>=0)
