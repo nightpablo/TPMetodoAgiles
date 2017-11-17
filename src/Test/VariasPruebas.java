@@ -151,7 +151,7 @@ public class VariasPruebas {
 		assertTrue(tj.edadSuficiente(11, 11, 1999, "A,B"));
 		assertTrue(tj.edadSuficiente(11, 11, 1996, "A,C"));
 		
-		
+		//Inicio de test donde es falsa
 		assertFalse(tj.edadSuficiente(1, 11, 2000, "A,B"));
 		assertFalse(tj.edadSuficiente(31, 11, 1999, "A,B"));
 		assertFalse(tj.edadSuficiente(1, 12, 1999, "A,B"));
