@@ -265,5 +265,37 @@ public class TitularJSON implements ControlImplementation<Titular>{
 		}
 	return costo + costo_administrativo;
 	}
-
+	
+	public boolean edadSuficiente(Titular tit, String clases) {
+		Integer dia = Integer.parseInt(tit.getFecha_nac().split("/")[0]);
+		Integer mes = Integer.parseInt(tit.getFecha_nac().split("/")[1]);
+		Integer año = Integer.parseInt(tit.getFecha_nac().split("/")[2]);
+		return edadSuficiente(dia, mes, año, clases);
+	}
+	
+	public boolean edadSuficiente(Integer dia, Integer mes, Integer año, String clases) {
+		if(clases.contains("C")||clases.contains("D")||clases.contains("E"))
+			return edadSuficiente(dia, mes, año, 21);
+		else
+			return edadSuficiente(dia, mes, año, 18);
+	}
+	
+	public boolean edadSuficiente(Integer dia, Integer mes, Integer año, Integer edad_permitido) {
+		
+		Date d = new Date();
+		Calendar c = Calendar.getInstance();
+		c.setTime(d);
+	    Integer dd = c.get(Calendar.DATE);
+	    Integer mm = c.get(Calendar.MONTH)+1;
+	    Integer aaaa = c.get(Calendar.YEAR);
+	    if(aaaa-año>edad_permitido)
+	    	return true;
+	    if(aaaa-año==edad_permitido)
+	    	if(mm-mes<0)
+	    		return true;
+	    	else if(mm-mes==0)
+	    		if(dd-dia>=0)
+	    			return true;
+	    return false;
+	}
 }

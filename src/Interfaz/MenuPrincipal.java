@@ -27,7 +27,7 @@ public class MenuPrincipal extends JFrame {
 		Home(); 
 		} 
 
-private void Home() {
+	private void Home() {
 		
 		getContentPane().removeAll();
 		getContentPane().repaint();

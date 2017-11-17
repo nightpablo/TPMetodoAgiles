@@ -546,6 +546,32 @@ public class AltaTitular extends JDialog {
 					return;
 				}
 				
+				String str = "";
+				str += checkBox.isSelected()? "A," : "";
+				str += checkBox_1.isSelected()? "B," : "";
+				str += checkBox_2.isSelected()? "C," : "";
+				str += checkBox_3.isSelected()? "D," : "";
+				str += checkBox_4.isSelected()? "E," : "";
+				str += checkBox_5.isSelected()? "F," : "";
+				str += checkBox_6.isSelected()? "G," : "";
+				if(!str.isEmpty())
+					str = str.substring(0, str.length()-1);
+				
+				if(!str.isEmpty() && !new TitularJSON().edadSuficiente(Integer.parseInt(textField_4.getText()),
+						Integer.parseInt(textField_5.getText()),
+						Integer.parseInt(textField_6.getText()), 
+						str)) {
+					for(JTextField i: listaCampos)
+						i.setBackground(new Color(173,255,47));
+					textField_4.setBackground(new Color(240,128,128));
+					textField_5.setBackground(new Color(240,128,128));
+					textField_6.setBackground(new Color(240,128,128));
+					JOptionPane.showMessageDialog(null, "¡La edad no es suficiente para las clases elegida!");
+					return;
+				}
+					
+					
+				
 				//Se cumplió todo
 				Titular nuevotitular = new TitularJSON().crear(
 						(String)comboBox.getSelectedItem(),

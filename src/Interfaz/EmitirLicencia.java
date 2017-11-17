@@ -299,6 +299,12 @@ public class EmitirLicencia extends JDialog{
 				str += (boolean)table.getValueAt(6, 2)? "G," : "";
 				str = str.substring(0, str.length()-1);
 				
+				if(!new TitularJSON().edadSuficiente(titularentrada, 
+						str)) {
+					JOptionPane.showMessageDialog(null, "¡La edad no es suficiente para las clases elegida!");
+					return;
+				}
+				
 				
 				nuevo_titular.setClases(str);	
 				nuevo_titular = new TitularJSON().crear(nuevo_titular);
