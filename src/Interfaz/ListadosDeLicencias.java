@@ -17,6 +17,8 @@ import javax.swing.JPanel;
 
 import javax.swing.JDialog;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
+
 import java.awt.GridBagLayout;
 import java.awt.GridBagConstraints;
 import java.awt.Insets;
@@ -70,13 +72,13 @@ public class ListadosDeLicencias extends JDialog{
 		gridBagLayout.rowWeights = new double[]{0.0, 0.0, 0.0, 0.0, 0.0, 0.0, Double.MIN_VALUE};
 		getContentPane().setLayout(gridBagLayout);
 		
-		JLabel lblNombreYApellido = new JLabel("Listado de licencias que han expirado");
-		lblNombreYApellido.setFont(new Font("Arial", Font.PLAIN, 18));
-		GridBagConstraints gbc_lblNombreYApellido = new GridBagConstraints();
-		gbc_lblNombreYApellido.insets = new Insets(0, 0, 5, 5);
-		gbc_lblNombreYApellido.gridx = 1;
-		gbc_lblNombreYApellido.gridy = 1;
-		getContentPane().add(lblNombreYApellido, gbc_lblNombreYApellido);
+		JLabel lblListadoDeLicenciasExpiradas = new JLabel("Listado de licencias que han expirado");
+		lblListadoDeLicenciasExpiradas.setFont(new Font("Arial", Font.PLAIN, 18));
+		GridBagConstraints gbc_lblListadoDeLicenciasExpiradas = new GridBagConstraints();
+		gbc_lblListadoDeLicenciasExpiradas.insets = new Insets(0, 0, 5, 5);
+		gbc_lblListadoDeLicenciasExpiradas.gridx = 1;
+		gbc_lblListadoDeLicenciasExpiradas.gridy = 1;
+		getContentPane().add(lblListadoDeLicenciasExpiradas, gbc_lblListadoDeLicenciasExpiradas);
 		
 		
 		GridBagConstraints gbc_label = new GridBagConstraints();
@@ -91,8 +93,13 @@ public class ListadosDeLicencias extends JDialog{
 				licenciasExpiradas = lj.buscarLicenciasExpiradas();
 				titularesLicenciasExpiradas = lj.buscarTitularesConLicenciasExpiradas(licenciasExpiradas);
 				
+				if(titularesLicenciasExpiradas.isEmpty())
+				{
+					JOptionPane.showMessageDialog(null, "¡No se encontraron licencias expiradas!");
+					return;
+				}
+					
 
-			
 				for(int i=0; i<licenciasExpiradas.size(); i++)
 		        {
 		        	model.addRow(new Object [] {"","","","","",""});			
@@ -159,15 +166,18 @@ public class ListadosDeLicencias extends JDialog{
 		model.addColumn("Fecha de emisión");
 		model.addColumn("Fecha de expiración");
 		
-		
-		
 
 	
 	//	table.getColumnModel().getColumn(0).setMaxWidth(100);
 		DefaultTableCellRenderer def = new DefaultTableCellRenderer();
 		def.setHorizontalAlignment(JLabel.CENTER);
-		table.getColumnModel().getColumn(0).setCellRenderer(def);
-		
+		//table.getColumnModel().getColumn(0).setCellRenderer(def);
+		for(int i=0; i<table.getColumnModel().getColumnCount(); i++)
+		{
+			table.getColumnModel().getColumn(i).setCellRenderer(def);
+			table.getColumnModel().getColumn(i).setResizable(false);
+
+		}
 		//table.getColumnModel().getColumn(1).setMaxWidth(1200);
 		//table.getColumnModel().getColumn(2).setMaxWidth(30);
 		table.setFont(new Font("Arial", Font.PLAIN, 20));

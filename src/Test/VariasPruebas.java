@@ -2,12 +2,17 @@ package Test;
 
 import static org.junit.Assert.*;
 
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 
 import org.junit.*;
 
+import Control.ContribuyenteJSON;
+import Control.LicenciaJSON;
 import Control.TitularJSON;
+import Entidad.Contribuyente;
+import Entidad.Licencia;
 import Entidad.Titular;
 import Utils.GestionCampos;
 
@@ -163,10 +168,96 @@ public class VariasPruebas {
 		assertFalse(tj.edadSuficiente(1, 11, 1997, "A,E,F,G"));
 		assertFalse(tj.edadSuficiente(31, 11, 1996, "A,C,G"));
 		assertFalse(tj.edadSuficiente(1, 12, 1996, "A,D,F"));
-		
-		
+			
 	}
 	
+	@Test
+	public void  pruebaDeListadosDeLicencias()
+	{
+		ArrayList<Licencia> licencias = new ArrayList<Licencia>();
+		
+		LicenciaJSON lj = new LicenciaJSON();
+		TitularJSON tj = new TitularJSON();
+		ContribuyenteJSON cj = new ContribuyenteJSON();
+		for(Licencia i: lj.listarEnLista())
+			lj.borrar(i);
+		for(Titular i: tj.listarEnLista())
+			tj.borrar(i);
+		for(Contribuyente i: cj.listarEnLista())
+			cj.borrar(i);
+		
+		Titular t1 = new Titular("DNI",33221100,"Tinelli","Marcelo","1/4/1960","ShowMatch 9999","Rosario","B,C","B","-",true,"1/1/2008");
+		t1 = new TitularJSON().crear(t1);
+		Titular t2 = new Titular("DNI",33221101,"Rico","Claudio","1/4/1950","ShowMatch 9999","Rosario","A,D","AB","-",true,"1/1/2009");
+		t2 = new TitularJSON().crear(t2);
+		Titular t3 = new Titular("DNI",33221102,"Florez","Fatima","1/4/1981","ShowMatch 9999","San Carlos","B,C,D,E","AB","-",true,"1/1/2007");
+		t3 = new TitularJSON().crear(t3);
+		
+		Licencia l1 = new Licencia(t1.getId_titular(),"10/10/2012","10/10/2010",0,"Usa un microfono","B,C");
+		new LicenciaJSON().crear(l1);
+		Licencia l2 = new Licencia(t2.getId_titular(),"10/10/2013","10/10/2016",0,"","A,D");
+		new LicenciaJSON().crear(l2);
+		Licencia l3 = new Licencia(t3.getId_titular(),"1/11/2012","1/11/2017",0,"","A,C,D,E");
+		new LicenciaJSON().crear(l3);
+		
+
+		licencias = new LicenciaJSON().buscarLicenciasExpiradas();
+		System.out.println(licencias.isEmpty());
+		assertFalse(licencias.isEmpty());
+		
+		for(Licencia i: lj.listarEnLista())
+			lj.borrar(i);
+		for(Titular i: tj.listarEnLista())
+			tj.borrar(i);
+		for(Contribuyente i: cj.listarEnLista())
+			cj.borrar(i);
+		
+		
+		t1 = new Titular("DNI",33221100,"Tinelli","Marcelo","1/4/1960","ShowMatch 9999","Rosario","B,C","B","-",true,"1/1/2008");
+		t1 = new TitularJSON().crear(t1);
+		t2 = new Titular("DNI",33221101,"Rico","Claudio","1/4/1950","ShowMatch 9999","Rosario","A,D","AB","-",true,"1/1/2009");
+		t2 = new TitularJSON().crear(t2);
+		t3 = new Titular("DNI",33221102,"Florez","Fatima","1/4/1981","ShowMatch 9999","San Carlos","B,C,D,E","AB","-",true,"1/1/2007");
+		t3 = new TitularJSON().crear(t3);
+		
+		l1 = new Licencia(t1.getId_titular(),"10/10/2012","10/10/2020",0,"Usa un microfono","B,C");
+		new LicenciaJSON().crear(l1);
+		l2 = new Licencia(t2.getId_titular(),"10/10/2013","10/10/2020",0,"","A,D");
+		new LicenciaJSON().crear(l2);
+		l3 = new Licencia(t3.getId_titular(),"1/11/2012","1/11/2017",0,"","A,C,D,E");
+		new LicenciaJSON().crear(l3);
+
+		licencias = new LicenciaJSON().buscarLicenciasExpiradas();
+		System.out.println(licencias.isEmpty());
+		assertFalse(licencias.isEmpty());
+		
+		
+		for(Licencia i: lj.listarEnLista())
+			lj.borrar(i);
+		for(Titular i: tj.listarEnLista())
+			tj.borrar(i);
+		for(Contribuyente i: cj.listarEnLista())
+			cj.borrar(i);
+		
+		t1 = new Titular("DNI",33221100,"Tinelli","Marcelo","1/4/1960","ShowMatch 9999","Rosario","B,C","B","-",true,"1/1/2008");
+		t1 = new TitularJSON().crear(t1);
+		t2 = new Titular("DNI",33221101,"Rico","Claudio","1/4/1950","ShowMatch 9999","Rosario","A,D","AB","-",true,"1/1/2009");
+		t2 = new TitularJSON().crear(t2);
+		t3 = new Titular("DNI",33221102,"Florez","Fatima","1/4/1981","ShowMatch 9999","San Carlos","B,C,D,E","AB","-",true,"1/1/2007");
+		t3 = new TitularJSON().crear(t3);
+		
+		l1 = new Licencia(t1.getId_titular(),"10/10/2012","10/10/2020",0,"Usa un microfono","B,C");
+		new LicenciaJSON().crear(l1);
+		l2 = new Licencia(t2.getId_titular(),"10/10/2013","10/10/2020",0,"","A,D");
+		new LicenciaJSON().crear(l2);
+		l3 = new Licencia(t3.getId_titular(),"1/11/2012","1/11/2020",0,"","A,C,D,E");
+		new LicenciaJSON().crear(l3);
+		
+		licencias = new LicenciaJSON().buscarLicenciasExpiradas();
+		System.out.println(licencias.isEmpty());
+		assertTrue(licencias.isEmpty());
+		
+	}
 	
 	
 	

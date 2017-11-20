@@ -38,7 +38,7 @@ public class MenuPrincipal extends JFrame {
 		JButton ayuda = new JButton(" AYUDA ");
 		ayuda.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				new EmitirLicencia(MenuPrincipal.this,new Titular(),new boolean[] {true, false, false, false, true, true,true}).setVisible(true);
+				//new EmitirLicencia(MenuPrincipal.this,new Titular(),new boolean[] {true, false, false, false, true, true,true}).setVisible(true);
 			}
 		});
 		
@@ -65,9 +65,7 @@ public class MenuPrincipal extends JFrame {
 			}
 		});
 		
-	
-		
-		
+
 		JButton btnImg = new JButton("");
 		btnImg.setIcon(new ImageIcon(MenuPrincipal.class.getResource("/Imagenes/licConducir.png")));
 		btnImg.setSelectedIcon(new ImageIcon(MenuPrincipal.class.getResource("/Imagenes/licConducir.png")));

@@ -32,7 +32,7 @@ public class IniciarBD {
 		new LicenciaJSON().crear(l3);
 	}
 
-	private static void eliminarBD() {
+	public static void eliminarBD() {
 		LicenciaJSON lj = new LicenciaJSON();
 		TitularJSON tj = new TitularJSON();
 		ContribuyenteJSON cj = new ContribuyenteJSON();
